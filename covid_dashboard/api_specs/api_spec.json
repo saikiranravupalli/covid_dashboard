@@ -1,0 +1,929 @@
+{
+    "swagger": "2.0",
+    "host": "localhost:8080",
+    "basePath": "/covid_dashboard/",
+    "schemes": ["http", "https"],
+    "info": {
+        "version": "1.0.0",
+        "title": "covid_19 API",
+        "description": ""
+    },
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "securityDefinitions": {
+        "oauth": {
+            "tokenUrl": "http://localhost:8080/o/token",
+            "flow": "password",
+            "scopes": {
+                "read": "read users",
+                "write": "create users",
+                "update": "update users",
+                "delete": "delete users",
+                "superuser": "super user permission"
+            },
+            "type": "oauth2"
+        }
+    },
+    "definitions": {
+        "MandalDetails": {
+            "type": "object",
+            "properties": {
+                "mandal_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "total_confirmed": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_deaths": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_recovered": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_active": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "mandal_id",
+                "name",
+                "total_confirmed",
+                "total_deaths",
+                "total_recovered",
+                "total_active"
+            ]
+        },
+        "DistrictDetails": {
+            "type": "object",
+            "properties": {
+                "district_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "total_confirmed": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_deaths": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_recovered": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_active": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "district_id",
+                "name",
+                "total_confirmed",
+                "total_deaths",
+                "total_recovered",
+                "total_active"
+            ]
+        },
+        "DailyDetails": {
+            "type": "object",
+            "properties": {
+                "for_date": {
+                    "type": "string"
+                },
+                "total_confirmed": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_deaths": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_recovered": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "for_date",
+                "total_confirmed",
+                "total_deaths",
+                "total_recovered"
+            ]
+        },
+        "Statistics": {
+            "type": "object",
+            "properties": {
+                "till_date": {
+                    "type": "string"
+                },
+                "total_confirmed": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_deaths": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_recovered": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_active": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "till_date",
+                "total_confirmed",
+                "total_deaths",
+                "total_recovered",
+                "total_active"
+            ]
+        },
+        "DistrictForDateStatistics": {
+            "type": "object",
+            "properties": {
+                "district_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "total_confirmed": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_deaths": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_recovered": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "district_id",
+                "name",
+                "total_confirmed",
+                "total_deaths",
+                "total_recovered"
+            ]
+        },
+        "MandalsForDateStatistics": {
+            "type": "object",
+            "properties": {
+                "mandal_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "total_confirmed": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_deaths": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "total_recovered": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "mandal_id",
+                "name",
+                "total_confirmed",
+                "total_deaths",
+                "total_recovered"
+            ]
+        }
+    },
+    "parameters": {
+        "UserDetailsParameter": {
+            "name": "user_details",
+            "in": "body",
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+        },
+        "MandalParameter": {
+            "name": "mandal_id",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "type": "integer"
+        },
+        "DistrictParameter": {
+            "name": "district_id",
+            "in": "path",
+            "required": true,
+            "description": "",
+            "type": "integer"
+        },
+        "DateParameter": {
+            "name": "till_date",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "till_date": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "till_date"
+                ]
+            }
+        },
+        "ForDateParameter": {
+            "name": "for_date",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "for_date": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "for_date"
+                ]
+            }
+        },
+        "StatisticsParameters": {
+            "name": "mandal",
+            "in": "body",
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "for_date": {
+                        "type": "string"
+                    },
+                    "total_confirmed": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_deaths": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_recovered": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "required": [
+                    "for_date",
+                    "total_confirmed",
+                    "total_deaths",
+                    "total_recovered"
+                ]
+            }
+        }
+    },
+    "responses": {
+        "UserDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "access_token": {
+                        "type": "string"
+                    },
+                    "refresh_token": {
+                        "type": "string"
+                    },
+                    "is_admin": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "access_token",
+                    "refresh_token",
+                    "is_admin"
+                ]
+            }
+        },
+        "StateCumulativeCovidDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "total_confirmed": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_deaths": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_recovered": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_active": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "districts": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/DistrictDetails"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "total_confirmed",
+                    "total_deaths",
+                    "total_recovered",
+                    "total_active",
+                    "districts"
+                ]
+            }
+        },
+        "DistrictCumulativeCovidDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "total_confirmed": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_deaths": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_recovered": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_active": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "mandals": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/MandalDetails"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "total_confirmed",
+                    "total_deaths",
+                    "total_recovered",
+                    "total_active",
+                    "mandals"
+                ]
+            }
+        },
+        "StateDailyCumulativeCovidDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "date_wise_details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/Statistics"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "date_wise_details"
+                ]
+            }
+        },
+        "DistrictsDailyCumulativeCovidDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "district_id": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "date_wise_details": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Statistics"
+                            }
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "district_id"
+                    ]
+                }
+            }
+        },
+        "MandalsDailyCumulativeCovidDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "mandal_id": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "date_wise_details": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Statistics"
+                            }
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "mandal_id"
+                    ]
+                }
+            }
+        },
+        "ForDateStateStatisticsResponse": {
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "total_confirmed": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_deaths": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_recovered": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "districts": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/DistrictForDateStatistics"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "total_confirmed",
+                    "total_deaths",
+                    "total_recovered",
+                    "districts"
+                ]
+            }
+        },
+        "ForDateDistrictStatisticsResponse": {
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "total_confirmed": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_deaths": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_recovered": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "mandals": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/MandalsForDateStatistics"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "total_confirmed",
+                    "total_deaths",
+                    "total_recovered",
+                    "mandals"
+                ]
+            }
+        },
+        "DailyDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "day_wise_details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/DailyDetails"
+                        }
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            }
+        },
+        "DistrictDailyCumulativeCovidDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "date_wise_details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/Statistics"
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "date_wise_details"
+                ]
+            }
+        },
+        "DailyStatisticsResponse": {
+            "description": "",
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "for_date": {
+                            "type": "string"
+                        },
+                        "district_id": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "district_name": {
+                            "type": "string"
+                        },
+                        "mandal_id": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "mandal_name": {
+                            "type": "string"
+                        },
+                        "total_confirmed": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "total_deaths": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "total_recovered": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    "required": [
+                        "for_date",
+                        "district_name",
+                        "mandal_name",
+                        "total_confirmed",
+                        "total_deaths",
+                        "total_recovered"
+                    ]
+                }
+            }
+        }
+    },
+    "paths": {
+        "/login/v1/": {
+            "post": {
+                "operationId": "get_user_login_details",
+                "summary": "get user login details",
+                "description": "",
+                "parameters": [{
+                    "$ref": "#/parameters/UserDetailsParameter"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/UserDetailsResponse"
+                    },
+                    "400": {
+                        "description": "Invalid details"
+                    }
+                }
+            }
+        },
+        "/state/cumulative/v1/": {
+            "post": {
+                "operationId": "get_cumulative_state_details",
+                "summary": "Each and every state's district details",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/DateParameter"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/StateCumulativeCovidDetailsResponse"
+                    }
+                }
+            }
+        },
+        "/state/day_wise/cumulative/v1/": {
+            "get": {
+                "operationId": "get_state_day_wise_cumulative_report_details",
+                "summary": "every date details",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/StateDailyCumulativeCovidDetailsResponse"
+                    }
+                }
+            }
+        },
+        "/districts/day_wise/cumulative/v1/": {
+            "get": {
+                "operationId": "get_districts_day_wise_cumulative_report_details",
+                "summary": "every date details",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/DistrictsDailyCumulativeCovidDetailsResponse"
+                    }
+                }
+            }
+        },
+        "/districts/{mandal_id}/v1/": {
+            "post": {
+                "operationId": "create_or_update_mandal_statistics",
+                "summary": "creates district's mandal details",
+                "description": "",
+                "security": [{
+                    "oauth": ["write"]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/MandalParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/StatisticsParameters"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "SUCCESS"
+                    },
+                    "400": {
+                        "description": "Invalid details"
+                    },
+                    "403": {
+                        "description": "Invalid Admin"
+                    }
+                }
+            }
+        },
+        "/state/for_date/statistics/v1/": {
+            "post": {
+                "operationId": "get_state_stats_on_given_date",
+                "summary": "Gives details on that particular date",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/ForDateParameter"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/ForDateStateStatisticsResponse"
+                    }
+                }
+            }
+        },
+        "/districts/{district_id}/cumulative/v1/": {
+            "post": {
+                "operationId": "get_cumulative_district_details",
+                "summary": "Each and every mandal's details of the given district",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/DateParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/DistrictParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/DistrictCumulativeCovidDetailsResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Details"
+                    }
+                }
+            }
+        },
+        "/state/day_wise/details/v1/": {
+            "get": {
+                "operationId": "get_day_wise_state_details",
+                "summary": "Day wise details of the state",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/DailyDetailsResponse"
+                    }
+                }
+            }
+        },
+        "/districts/{district_id}/day_wise/cumulative/v1/": {
+            "get": {
+                "operationId": "get_day_wise_cumulative_mandal_details",
+                "summary": "Day wise cumulative details of the district and it's mandals",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/DistrictParameter"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/DistrictDailyCumulativeCovidDetailsResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Details"
+                    }
+                }
+            }
+        },
+        "/statistics/admin/v1/": {
+            "get": {
+                "operationId": "get_daily_statistics",
+                "summary": "Gives daily statistics",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/DailyStatisticsResponse"
+                    },
+                    "403": {
+                        "description": "Invalid Access"
+                    }
+                }
+            }
+        },
+        "/districts/{district_id}/day_wise/details/v1/": {
+            "get": {
+                "operationId": "get_day_wise_district_details",
+                "summary": "Day wise details of the given district",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/DistrictParameter"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/DailyDetailsResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Details"
+                    }
+                }
+            }
+        },
+        "/districts/{district_id}/mandals/day_wise/cumulative/v1/": {
+            "get": {
+                "operationId": "get_mandals_day_wise_cumulative_statistics",
+                "summary": "every date details",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/DistrictParameter"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/MandalsDailyCumulativeCovidDetailsResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Details"
+                    }
+                }
+            }
+        },
+        "/districts/{district_id}/for_date/statistics/v1/": {
+            "post": {
+                "operationId": "get_district_stats_on_given_date",
+                "summary": "Gives details on that particular date",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/ForDateParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/DistrictParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/ForDateDistrictStatisticsResponse"
+                    },
+                    "400": {
+                        "description": "Invalid Details"
+                    }
+                }
+            }
+        }
+    }
+}
