@@ -9,7 +9,7 @@ def test_get_district_statistics_on_given_date_returns_district_statistics_dto(
     daily_statistics, district_statistics_dto):
 
     # Arrange
-    for_date = '2020/05/26'
+    for_date = '26/05/2020'
     district_id = 1
     storage = MandalStorageImplementation()
     

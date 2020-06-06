@@ -1,3 +1,4 @@
+from django.db import connection
 from datetime import date
 from covid_dashboard.interactors.storages.state_storage_interface import \
     StateStorageInterface

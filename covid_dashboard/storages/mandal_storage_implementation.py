@@ -155,8 +155,7 @@ class MandalStorageImplementation(MandalStorageInterface):
         day_stats = mandal_day_wise_stats[0]
         mandal_name = day_stats['name']
 
-        stats = mandal_day_wise_stats[0]
-        if 'for_date' not in stats.keys():
+        if 'for_date' not in day_stats.keys():
             return MandalsDayWiseCumulativeStatisticsDto(
                 mandal_id=mandal_id,
 		        name=mandal_name,
@@ -190,7 +189,6 @@ class MandalStorageImplementation(MandalStorageInterface):
         total_dicts_list = []
         for_dates = DailyStatistics.objects.values_list(
             'for_date', flat=True)
-        for_dates = list(dict.fromkeys(for_dates))
 
         till_dates_list = [
             mandal_dict['for_date']

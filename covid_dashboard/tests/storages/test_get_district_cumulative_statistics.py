@@ -9,7 +9,7 @@ def test_get_district_cumulative_statistics_returns_district_cumulative_dtos(
     daily_statistics, district_cumulative_statistics_dto):
 
     # Arrange
-    till_date = '2020/05/27'
+    till_date = '27/05/2020'
     district_id = 1
     storage = DistrictStorageImplementation()
     

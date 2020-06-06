@@ -425,10 +425,24 @@ def mandal_statistics_dtos():
         ),
         MandalStatisticsDto(
             mandal_id=2,
-            name='mandal_1',
+            name='mandal_2',
             total_confirmed=100,
             total_deaths=20,
             total_recovered=40
+        ),
+        MandalStatisticsDto(
+            mandal_id=3,
+            name='mandal_3',
+            total_confirmed=0,
+            total_deaths=0,
+            total_recovered=0
+        ),
+        MandalStatisticsDto(
+            mandal_id=4,
+            name='mandal_4',
+            total_confirmed=0,
+            total_deaths=0,
+            total_recovered=0
         )
     ]
     mandal_statistics_dtos
@@ -473,22 +487,6 @@ def mandal_cumulative_statistics_dtos():
             total_deaths=40,
             total_recovered=100,
             total_active=60
-        ),
-        MandalActiveCasesDto(
-            mandal_id=3,
-            name='mandal_3',
-            total_confirmed=0,
-            total_deaths=0,
-            total_recovered=0,
-            total_active=0
-        ),
-        MandalActiveCasesDto(
-            mandal_id=4,
-            name='mandal_4',
-            total_confirmed=0,
-            total_deaths=0,
-            total_recovered=0,
-            total_active=0
         )
     ]
     return mandal_cumulative_statistics_dtos

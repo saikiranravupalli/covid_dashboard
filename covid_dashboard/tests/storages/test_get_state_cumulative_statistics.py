@@ -9,7 +9,7 @@ def test_get_state_cumulative_statistics_returns_state_cumulative_dtos(
     daily_statistics, district_stats_dto, state_stats_dto):
 
     # Arrange
-    till_date = '2020/05/27'
+    till_date = '27/05/2020'
     storage = StateStorageImplementation()
     
     # Act

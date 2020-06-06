@@ -366,13 +366,13 @@ def district_day_wise_statistics_response():
         "name": "district_1",
         "day_wise_details": [
             {
-                "till_date": "2020/05/26",
+                "for_date": "26/05/2020",
                 "total_confirmed": 400,
                 "total_deaths": 75,
                 "total_recovered": 175
             },
             {
-                "till_date": "2020/05/27",
+                "for_date": "27/05/2020",
                 "total_confirmed": 400,
                 "total_deaths": 45,
                 "total_recovered": 220
@@ -444,21 +444,21 @@ def day_wise_state_cumulative_response():
         "name": "state_1",
         "date_wise_details": [
             {
-                "till_date": "2020/05/27",
+                "till_date": "27/05/2020",
                 "total_confirmed": 220,
                 "total_deaths": 30,
                 "total_recovered": 80,
                 "total_active": 110,
             },
             {
-                "till_date": "2020/05/28",
+                "till_date": "28/05/2020",
                 "total_confirmed": 440,
                 "total_deaths": 60,
                 "total_recovered": 160,
                 "total_active": 220,
             },
             {
-                "till_date": "2020/05/29",
+                "till_date": "29/05/2020",
                 "total_confirmed": 660,
                 "total_deaths": 90,
                 "total_recovered": 240,
@@ -475,14 +475,14 @@ def district_cumulative_response():
         "name": "district_1",
         "date_wise_details": [
             {
-                "till_date": "2020/05/26",
+                "till_date": "26/05/2020",
                 "total_confirmed": 200,
                 "total_deaths": 30,
                 "total_recovered": 110,
                 "total_active": 60
             },
             {
-                "till_date": "2020/05/27",
+                "till_date": "27/05/2020",
                 "total_confirmed": 200,
                 "total_deaths": 30,
                 "total_recovered": 140,
@@ -497,21 +497,21 @@ def district_cumulative_response():
 def day_wise_state_statistics_response():
     state_statistics_response = {
         "name": "state_1",
-        "date_wise_details": [
+        "day_wise_details": [
             {
-                "till_date": "2020/05/27",
+                "for_date": "27/05/2020",
                 "total_confirmed": 220,
                 "total_deaths": 30,
                 "total_recovered": 80
             },
             {
-                "till_date": "2020/05/28",
+                "for_date": "28/05/2020",
                 "total_confirmed": 220,
                 "total_deaths": 30,
                 "total_recovered": 80
             },
             {
-                "till_date": "2020/05/29",
+                "for_date": "29/05/2020",
                 "total_confirmed": 220,
                 "total_deaths": 30,
                 "total_recovered": 80
@@ -529,14 +529,14 @@ def day_wise_district_cumulative_response():
             "name": "district_1",
             "date_wise_details": [
                 {
-                    "till_date": "2020/05/26",
+                    "till_date": "26/05/2020",
                     "total_confirmed": 200,
                     "total_deaths": 30,
                     "total_recovered": 110,
                     "total_active": 60,
                 },
                 {
-                    "till_date": "2020/05/27",
+                    "till_date": "27/05/2020",
                     "total_confirmed": 200,
                     "total_deaths": 30,
                     "total_recovered": 140,
@@ -549,14 +549,14 @@ def day_wise_district_cumulative_response():
             "name": "district_2",
             "date_wise_details": [
                 {
-                    "till_date": "2020/05/26",
+                    "till_date": "26/05/2020",
                     "total_confirmed": 200,
                     "total_deaths": 45,
                     "total_recovered": 65,
                     "total_active": 90,
                 },
                 {
-                    "till_date": "2020/05/27",
+                    "till_date": "27/05/2020",
                     "total_confirmed": 200,
                     "total_deaths": 15,
                     "total_recovered": 80,
@@ -602,7 +602,7 @@ def district_cumulative_statistics_response():
         "total_deaths": 60,
         "total_recovered": 250,
         "total_active": 90,
-        "districts": [
+        "mandals": [
             {
                 "mandal_id": 1,
                 "name": "mandal_1",
@@ -627,7 +627,7 @@ def district_cumulative_statistics_response():
 def get_daily_statistics_response():
     get_daily_statistics_response = [
         {
-            "for_date": "2020/05/27",
+            "for_date": "27/05/2020",
             "district_id": 1,
             "district_name": "district_1",
             "mandal_id": 1,
@@ -647,14 +647,14 @@ def day_wise_mandals_cumulative_response():
             "name": "mandal_1",
             "date_wise_details": [
                 {
-                    "till_date": "2020/05/26",
+                    "till_date": "26/05/2020",
                     "total_confirmed": 100,
                     "total_deaths": 10,
                     "total_recovered": 40,
                     "total_active": 50,
                 },
                 {
-                    "till_date": "2020/05/27",
+                    "till_date": "27/05/2020",
                     "total_confirmed": 200,
                     "total_deaths": 30,
                     "total_recovered": 100,
@@ -667,14 +667,14 @@ def day_wise_mandals_cumulative_response():
             "name": "mandal_2",
             "date_wise_details": [
                 {
-                    "till_date": "2020/05/26",
+                    "till_date": "26/05/2020",
                     "total_confirmed": 100,
                     "total_deaths": 10,
                     "total_recovered": 40,
                     "total_active": 50,
                 },
                 {
-                    "till_date": "2020/05/27",
+                    "till_date": "27/05/2020",
                     "total_confirmed": 200,
                     "total_deaths": 30,
                     "total_recovered": 100,

@@ -6,7 +6,8 @@ from covid_dashboard.interactors.storages.dtos import \
     StateStatisticsDto, DistrictCumulativeStatisticsDto, \
     StateDayWiseStatisticsDto, DailyStatisticsDto, \
     DistrictDayWiseCumulativeStatisticsDto, DistrictOnDateStatisticsDto, \
-    MandalsDayWiseCumulativeStatisticsDto, DistrictDailyStatisticsDto
+    MandalsDayWiseCumulativeStatisticsDto, DistrictDailyStatisticsDto, \
+    DistrictZonesDto
 
 class PresenterInterface(ABC):
 
@@ -95,4 +96,11 @@ class PresenterInterface(ABC):
     @abstractmethod
     def get_day_wise_district_statistics_response(self,
         day_wise_district_statistics_dtos: List[DistrictDailyStatisticsDto]):
+        pass
+
+    @abstractmethod
+    def get_district_wise_zone_details_response(self,
+        green_zone_dtos_list=List[DistrictZonesDto],
+        orange_zone_dtos_list=List[DistrictZonesDto],
+        red_zone_dtos_list=List[DistrictZonesDto]):
         pass

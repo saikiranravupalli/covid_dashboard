@@ -54,6 +54,14 @@ def test_state_cumulative_details_interactor_with_invalid_details_returns_empty_
     presenter = create_autospec(PresenterInterface)
     storage = create_autospec(StateStorageInterface)
     storage.get_state_cumulative_statistics.return_value = None
+    expected_dict = {
+        "name": "AndhraPradesh",
+        "total_confirmed": 0,
+        "total_active": 0,
+        "total_deaths": 0,
+        "total_recovered": 0,
+        "districts": []
+    }
 
     interactor = StateCumulativeStatisticsInteractor(
         storage=storage,
@@ -66,7 +74,7 @@ def test_state_cumulative_details_interactor_with_invalid_details_returns_empty_
     )
 
     # Assert
-    assert response == []
+    assert response == expected_dict
     storage.get_state_cumulative_statistics.assert_called_once_with(
         till_date=till_date
     )

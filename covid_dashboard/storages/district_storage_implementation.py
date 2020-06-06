@@ -343,13 +343,12 @@ class DistrictStorageImplementation(DistrictStorageInterface):
         day_stats = district_day_wise_stats[0]
         district_name = day_stats['name']
 
-        for stats in district_day_wise_stats:
-            if 'for_date' not in stats.keys():
-                return DistrictsDayWiseCumulativeStatisticsDto(
-                    district_id=district_id,
-		            name=district_name,
-                    date_wise_details=[]
-	            )
+        if 'for_date' not in day_stats.keys():
+            return DistrictsDayWiseCumulativeStatisticsDto(
+                district_id=district_id,
+	            name=district_name,
+                date_wise_details=[]
+            )
 
         total_district_dicts_list = self._check_date_wise_details(
             district_day_wise_stats)

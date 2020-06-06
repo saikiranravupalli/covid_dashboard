@@ -13,7 +13,7 @@ from covid_dashboard.interactors.storages.dtos import \
     MandalActiveCasesDto, StateDayWiseStatisticsDto, DailyStatisticsDto, \
     DistrictDayWiseCumulativeStatisticsDto, DistrictOnDateStatisticsDto, \
     MandalStatisticsDto, MandalsDayWiseCumulativeStatisticsDto, \
-    DistrictDailyStatisticsDto
+    DistrictDailyStatisticsDto, DistrictZonesDto
 from covid_dashboard.interactors.presenters.presenter_interface import \
     PresenterInterface
 
@@ -41,8 +41,7 @@ class PresenterImplementation(PresenterInterface):
 
         district_cumulative_dicts_list = [
             self._convert_district_cumulative_statistics_dtos_to_dict(
-                district_dto=district_dto
-            )
+                district_dto=district_dto)
             for district_dto in state_cumulative_statistics_dto.districts
         ]
 
@@ -59,12 +58,11 @@ class PresenterImplementation(PresenterInterface):
 
         state_dto = day_wise_state_cumulative_dtos[0]
         state_name = state_dto.name
-        cumulative_day_wise_dict_list = []
-        for day_wise_dto in day_wise_state_cumulative_dtos:
-            day_wise_dict = \
-                self._convert_day_wise_statistics_dict_to_dto(day_wise_dto)
-            day_wise_dict['total_active'] = day_wise_dto.total_active
-            cumulative_day_wise_dict_list.append(day_wise_dict)
+        cumulative_day_wise_dict_list = [
+            self._convert_day_wise_cumulative_statistics_dict_to_dto(
+                day_wise_dto)
+            for day_wise_dto in day_wise_state_cumulative_dtos
+        ]
 
         response = {
             "name": state_name,
@@ -79,8 +77,7 @@ class PresenterImplementation(PresenterInterface):
 
         cumulative_day_wise_districts_dict_list = [
             self._convert_district_cumulative_statistics_dict_to_dto(
-                district_wise_dto
-            )
+                district_wise_dto)
             for district_wise_dto in day_wise_districts_cumulative_dtos
         ]
 
@@ -97,8 +94,7 @@ class PresenterImplementation(PresenterInterface):
 
         district_statistics_dicts_list = [
             self._convert_district_statistics_dtos_to_dict(
-                district_dto=district_dto
-            )
+                district_dto=district_dto)
             for district_dto in state_statistics_dto.districts
         ]
 
@@ -114,8 +110,7 @@ class PresenterImplementation(PresenterInterface):
 
         mandal_cumulative_dicts_list = [
             self._convert_mandal_cumulative_statistics_dtos_to_dict(
-                mandal_dto=mandal_dto
-            )
+                mandal_dto=mandal_dto)
             for mandal_dto in district_cumulative_statistics_dto.mandals
         ]
 
@@ -182,8 +177,7 @@ class PresenterImplementation(PresenterInterface):
 
         mandal_statistics_dicts_list = [
             self._convert_mandal_statistics_dtos_to_dict(
-                mandal_dto=mandal_dto
-            )
+                mandal_dto=mandal_dto)
             for mandal_dto in district_statistics_on_date_dto.mandals
         ]
 
@@ -200,8 +194,7 @@ class PresenterImplementation(PresenterInterface):
 
         cumulative_day_wise_mandals_dict_list = [
             self._convert_mandal_cumulative_statistics_dict_to_dto(
-                mandal_wise_dto
-            )
+                mandal_wise_dto)
             for mandal_wise_dto in day_wise_mandals_cumulative_dtos
         ]
 
@@ -224,6 +217,31 @@ class PresenterImplementation(PresenterInterface):
 
         return response
 
+    def get_district_wise_zone_details_response(self,
+        green_zone_dtos_list: List[DistrictZonesDto],
+        orange_zone_dtos_list: List[DistrictZonesDto],
+        red_zone_dtos_list: List[DistrictZonesDto]):
+
+        green_zone_dicts_list = [
+            self._convert_green_zone_dto_green_zone_dict(district_dto)
+            for district_dto in green_zone_dtos_list
+        ]
+
+        orange_zone_dicts_list = [
+            self._convert_orange_zone_dto_orange_zone_dict(district_dto)
+            for district_dto in orange_zone_dtos_list
+        ]
+
+        red_zone_dicts_list = [
+            self._convert_red_zone_dto_red_zone_dict(district_dto)
+            for district_dto in red_zone_dtos_list
+        ]
+
+        overall_zones_list = green_zone_dicts_list + orange_zone_dicts_list + \
+            red_zone_dicts_list
+
+        return overall_zones_list
+
     def _convert_district_cumulative_statistics_dict_to_dto(self,
         district_wise_dto):
 
@@ -231,12 +249,11 @@ class PresenterImplementation(PresenterInterface):
         district_details_dict['district_id'] = district_wise_dto.district_id
         district_details_dict['name'] = district_wise_dto.name
 
-        date_wise_details_dicts_list = []
-        for date_wise_dto in district_wise_dto.date_wise_details:
-            date_wise_dict = \
-                self._convert_day_wise_cumulative_statistics_dict_to_dto(
-                    date_wise_dto)
-            date_wise_details_dicts_list.append(date_wise_dict)
+        date_wise_details_dicts_list = [
+            self._convert_day_wise_cumulative_statistics_dict_to_dto(
+                date_wise_dto)
+            for date_wise_dto in district_wise_dto.date_wise_details
+        ]
 
         district_details_dict['date_wise_details'] = \
             date_wise_details_dicts_list
@@ -250,12 +267,11 @@ class PresenterImplementation(PresenterInterface):
         mandal_details_dict['mandal_id'] = mandal_wise_dto.mandal_id
         mandal_details_dict['name'] = mandal_wise_dto.name
 
-        date_wise_details_dicts_list = []
-        for date_wise_dto in mandal_wise_dto.date_wise_details:
-            date_wise_dict = \
-                self._convert_day_wise_cumulative_statistics_dict_to_dto(
-                    date_wise_dto)
-            date_wise_details_dicts_list.append(date_wise_dict)
+        date_wise_details_dicts_list = [
+            self._convert_day_wise_cumulative_statistics_dict_to_dto(
+                date_wise_dto)
+            for date_wise_dto in mandal_wise_dto.date_wise_details
+        ]
 
         mandal_details_dict['date_wise_details'] = \
             date_wise_details_dicts_list
@@ -352,7 +368,7 @@ class PresenterImplementation(PresenterInterface):
                 district_cumulative_statistics_dto.total_recovered,
             'total_active':
                 district_cumulative_statistics_dto.total_active,
-            'districts': mandal_cumulative_dicts_list
+            'mandals': mandal_cumulative_dicts_list
         }
         return district_cumulative_statistics_dict
 
@@ -418,3 +434,30 @@ class PresenterImplementation(PresenterInterface):
         }
 
         return daily_statistics_dto
+
+    @staticmethod
+    def _convert_green_zone_dto_green_zone_dict(district_dto):
+        green_zone_dict = {
+            "district_id": district_dto.district_id,
+            "name": district_dto.name,
+            "zone": DistrictZones.GREEN.value
+        }
+        return green_zone_dict
+
+    @staticmethod
+    def _convert_orange_zone_dto_orange_zone_dict(district_dto):
+        orange_zone_dict = {
+            "district_id": district_dto.district_id,
+            "name": district_dto.name,
+            "zone": DistrictZones.ORANGE.value
+        }
+        return orange_zone_dict
+
+    @staticmethod
+    def _convert_red_zone_dto_red_zone_dict(district_dto):
+        red_zone_dict = {
+            "district_id": district_dto.district_id,
+            "name": district_dto.name,
+            "zone": DistrictZones.RED.value
+        }
+        return red_zone_dict

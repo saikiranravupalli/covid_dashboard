@@ -47,13 +47,21 @@ def test_get_state_stats_on_given_date_interactor_with_valid_details_returns_dto
             state_statistics_dto=state_statistics_dto
         )
 
-def test_state_cumulative_details_interactor_with_invalid_details_returns_empty_list():
+def test_state_cumulative_details_interactor_with_invalid_details_returns_dict_with_zeroes():
 
     # Arrange
     for_date = "2020/02/27"
     presenter = create_autospec(PresenterInterface)
     storage = create_autospec(StateStorageInterface)
     storage.get_state_statistics_on_given_date.return_value = None
+    expected_dict = {
+        "name": "AndhraPradesh",
+        "total_confirmed": 0,
+        "total_active": 0,
+        "total_deaths": 0,
+        "total_recovered": 0,
+        "districts": []
+    }
 
     interactor = StateStatisticsInteractor(
         storage=storage,
@@ -66,7 +74,7 @@ def test_state_cumulative_details_interactor_with_invalid_details_returns_empty_
     )
 
     # Assert
-    assert response == []
+    assert response == expected_dict
     storage.get_state_statistics_on_given_date.assert_called_once_with(
         for_date=for_date
     )

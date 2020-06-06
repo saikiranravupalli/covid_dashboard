@@ -127,3 +127,9 @@ class DistrictOnDateStatisticsDto:
     total_deaths: int
     total_recovered: int
     mandals: List[MandalStatisticsDto]
+
+@dataclass()
+class DistrictZonesDto:
+    district_id: int
+    name: str
+    active_cases: int

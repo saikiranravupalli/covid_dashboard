@@ -10,7 +10,7 @@ def test_is_valid_mandal_stats_given_invalid_details_raises_exception():
 
     # Arrange
     mandal_id = 1
-    for_date = '2020/05/10'
+    for_date = '10/05/2020'
     storage = MandalStorageImplementation()
 
     # Act

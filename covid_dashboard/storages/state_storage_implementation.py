@@ -10,7 +10,8 @@ from covid_dashboard.models import DailyStatistics, State, District
 from covid_dashboard.interactors.storages.dtos import \
     StateCumulativeStatisticsDto, DistrictActiveCasesDto, \
     StateDayWiseCumulativeStatisticsDto, DistrictActiveCasesDto, \
-    StateStatisticsDto, DistrictStatisticsDto, StateDayWiseStatisticsDto
+    StateStatisticsDto, DistrictStatisticsDto, StateDayWiseStatisticsDto, \
+    DistrictZonesDto
 from covid_dashboard.interactors.storages.state_storage_interface import \
     StateStorageInterface
 
@@ -61,6 +62,31 @@ class StateStorageImplementation(StateStorageInterface):
             )
 
         return state_day_wise_statistics_dtos
+
+    def get_district_wise_active_cases_details(self) \
+        -> List[DistrictZonesDto]:
+
+        districts_details_dict = \
+            DailyStatistics.objects.values('mandal__district_id')\
+                                   .annotate(
+                                       total_confirmed=Sum('total_confirmed'),
+                                       total_recovered=Sum('total_recovered'),
+                                       total_deaths=Sum('total_deaths')
+                                    )
+
+        complete_districts_dict_list = \
+            self._add_name_field_to_district_dicts(
+                districts_details_dict
+            )
+
+        districts_zone_dtos = [
+            self._convert_districts_details_dict_to_dto_with_active_cases(
+                district_dict)
+            for district_dict in complete_districts_dict_list
+        ]
+
+        return districts_zone_dtos
+
 
     def _convert_statistics_list_to_dtos(self,
         state_day_wise_statistics_list):
@@ -324,7 +350,7 @@ class StateStorageImplementation(StateStorageInterface):
 
         districts_cumulative_dicts_list = \
             sorted(districts_cumulative_dicts_list,
-                   key = lambda k:k['mandal__district_id'])
+                   key=lambda k:k['mandal__district_id'])
 
         return districts_cumulative_dicts_list
 
@@ -431,6 +457,25 @@ class StateStorageImplementation(StateStorageInterface):
         )
 
         return state_day_wise_statistics_dto
+
+    @staticmethod
+    def _convert_districts_details_dict_to_dto_with_active_cases(
+        district_cumulative_dict):
+        district_id = district_cumulative_dict['mandal__district_id']
+        name = district_cumulative_dict['name']
+
+        active_cases = district_cumulative_dict['total_confirmed'] - (
+            district_cumulative_dict['total_deaths'] +
+            district_cumulative_dict['total_recovered']
+        )
+
+        district_cumulative_dto = DistrictZonesDto(
+            district_id=district_id,
+            name=name,
+            active_cases=active_cases
+        )
+
+        return district_cumulative_dto
 
     @staticmethod
     def _convert_string_format_date_to_date_object(till_date):

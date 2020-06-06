@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List
 from covid_dashboard.interactors.storages.dtos import \
     StateCumulativeStatisticsDto, StateDayWiseCumulativeStatisticsDto, \
-    StateStatisticsDto, StateDayWiseStatisticsDto
+    StateStatisticsDto, StateDayWiseStatisticsDto, DistrictZonesDto
 
 class StateStorageInterface(ABC):
 
@@ -24,4 +24,9 @@ class StateStorageInterface(ABC):
     @abstractmethod
     def get_day_wise_state_statistics(self) -> \
         List[StateDayWiseStatisticsDto]:
+        pass
+
+    @abstractmethod
+    def get_district_wise_active_cases_details(self) \
+        -> List[DistrictZonesDto]:
         pass

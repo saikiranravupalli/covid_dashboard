@@ -57,7 +57,7 @@ def test_get_district_stats_on_given_date_interactor_with_valid_details_returns_
             district_statistics_on_date_dto=district_statistics_dto
         )
 
-def test_get_district_stats_on_given_date_with_no_data_on_that_date_returns_empty_list():
+def test_get_district_stats_on_given_date_with_no_data_on_that_date_returns_dict_with_zeroes():
 
     # Arrange
     for_date = "2020/02/27"
@@ -65,8 +65,15 @@ def test_get_district_stats_on_given_date_with_no_data_on_that_date_returns_empt
     presenter = create_autospec(PresenterInterface)
     district_storage = create_autospec(DistrictStorageInterface)
     mandal_storage = create_autospec(MandalStorageInterface)
-    mandal_storage.get_district_statistics_on_given_date.return_value = \
-        None
+    mandal_storage.get_district_statistics_on_given_date.return_value = 'district_1'
+    expected_dict = {
+        "name": 'district_1',
+        "total_confirmed": 0,
+        "total_recovered": 0,
+        "total_active": 0,
+        "total_deaths": 0,
+        "mandals": []
+    }
 
     interactor = DistrictStatisticsInteractor(
         district_storage=district_storage,
@@ -81,7 +88,7 @@ def test_get_district_stats_on_given_date_with_no_data_on_that_date_returns_empt
     )
 
     # Assert
-    assert response == []
+    assert response == expected_dict
     mandal_storage.get_district_statistics_on_given_date\
         .assert_called_once_with(
             for_date=for_date,

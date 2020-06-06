@@ -9,7 +9,7 @@ from covid_dashboard.storages.mandal_storage_implementation import \
 def test_create_mandal_statistics_with_valid_details_updates_mandals_statistics(
     mandals
 ):
-    for_date="2020/05/27"
+    for_date="27/05/2020"
     total_confirmed=30
     total_deaths=5
     total_recovered=20
@@ -23,7 +23,7 @@ def test_create_mandal_statistics_with_valid_details_updates_mandals_statistics(
         total_recovered=total_recovered,
         mandal_id=mandal_id
     )
-    for_date = datetime.strptime(for_date, '%Y/%m/%d').date()
+    for_date = datetime.strptime(for_date, '%d/%m/%Y').date()
 
     # Act
     daily_stats = DailyStatistics.objects.get(

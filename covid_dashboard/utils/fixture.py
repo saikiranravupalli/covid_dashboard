@@ -68,6 +68,27 @@ daily_statistics_list = [
         "mandal_id": 1
     },
     {
+        "for_date": date(2020, 6, 4),
+        "total_confirmed": 100,
+        "total_recovered": 20,
+        "total_deaths": 15,
+        "mandal_id": 1
+    },
+    {
+        "for_date": date(2020, 6, 5),
+        "total_confirmed": 140,
+        "total_recovered": 50,
+        "total_deaths": 25,
+        "mandal_id": 1
+    },
+    {
+        "for_date": date(2020, 6, 6),
+        "total_confirmed": 150,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 1
+    },
+    {
         "for_date": date(2020, 6, 1),
         "total_confirmed": 100,
         "total_recovered": 30,
@@ -85,6 +106,27 @@ daily_statistics_list = [
         "for_date": date(2020, 6, 3),
         "total_confirmed": 140,
         "total_recovered": 60,
+        "total_deaths": 25,
+        "mandal_id": 2
+    },
+    {
+        "for_date": date(2020, 6, 4),
+        "total_confirmed": 120,
+        "total_recovered": 40,
+        "total_deaths": 45,
+        "mandal_id": 2
+    },
+    {
+        "for_date": date(2020, 6, 5),
+        "total_confirmed": 60,
+        "total_recovered": 20,
+        "total_deaths": 5,
+        "mandal_id": 2
+    },
+    {
+        "for_date": date(2020, 6, 6),
+        "total_confirmed": 135,
+        "total_recovered": 70,
         "total_deaths": 25,
         "mandal_id": 2
     },
@@ -110,6 +152,27 @@ daily_statistics_list = [
         "mandal_id": 3
     },
     {
+        "for_date": date(2020, 6, 4),
+        "total_confirmed": 125,
+        "total_recovered": 45,
+        "total_deaths": 20,
+        "mandal_id": 3
+    },
+    {
+        "for_date": date(2020, 6, 5),
+        "total_confirmed": 160,
+        "total_recovered": 35,
+        "total_deaths": 20,
+        "mandal_id": 3
+    },
+    {
+        "for_date": date(2020, 6, 6),
+        "total_confirmed": 260,
+        "total_recovered": 100,
+        "total_deaths": 15,
+        "mandal_id": 3
+    },
+    {
         "for_date": date(2020, 6, 1),
         "total_confirmed": 400,
         "total_recovered": 120,
@@ -128,6 +191,27 @@ daily_statistics_list = [
         "total_confirmed": 600,
         "total_recovered": 140,
         "total_deaths": 20,
+        "mandal_id": 4
+    },
+    {
+        "for_date": date(2020, 6, 4),
+        "total_confirmed": 270,
+        "total_recovered": 90,
+        "total_deaths": 20,
+        "mandal_id": 4
+    },
+    {
+        "for_date": date(2020, 6, 5),
+        "total_confirmed": 70,
+        "total_recovered": 130,
+        "total_deaths": 15,
+        "mandal_id": 4
+    },
+    {
+        "for_date": date(2020, 6, 6),
+        "total_confirmed": 200,
+        "total_recovered": 80,
+        "total_deaths": 5,
         "mandal_id": 4
     }
 ]

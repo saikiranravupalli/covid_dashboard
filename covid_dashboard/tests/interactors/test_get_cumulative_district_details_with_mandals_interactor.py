@@ -22,7 +22,7 @@ def test_district_cumulative_details_with_invalid_district_id_raises_exceptions(
     presenter = create_autospec(PresenterInterface)
     storage = create_autospec(DistrictStorageInterface)
     storage.is_valid_district_id.side_effect = InvalidDistrict
-    presenter.raise_exception_for_invalid_district.return_value =  BadRequest
+    presenter.raise_exception_for_invalid_district.return_value = BadRequest
     interactor = DistrictCumulativeStatisticsInteractor(
         storage=storage,
         presenter=presenter
@@ -86,7 +86,15 @@ def test_district_cumulative_details_interactor_with_invalid_details_returns_emp
     district_id = 1
     presenter = create_autospec(PresenterInterface)
     storage = create_autospec(DistrictStorageInterface)
-    storage.get_district_cumulative_statistics.return_value = None
+    storage.get_district_cumulative_statistics.return_value = 'district_1'
+    expected_dict = {
+        "name": 'district_1',
+        "total_confirmed": 0,
+        "total_recovered": 0,
+        "total_active": 0,
+        "total_deaths": 0,
+        "mandals": []
+    }
 
     interactor = DistrictCumulativeStatisticsInteractor(
         storage=storage,
@@ -99,7 +107,7 @@ def test_district_cumulative_details_interactor_with_invalid_details_returns_emp
     )
 
     # Assert
-    assert response == []
+    assert response == expected_dict
     storage.get_district_cumulative_statistics.assert_called_once_with(
         till_date=till_date, district_id=district_id
     )

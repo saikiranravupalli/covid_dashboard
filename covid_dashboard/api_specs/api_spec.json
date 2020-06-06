@@ -660,6 +660,37 @@
                     ]
                 }
             }
+        },
+        "DistrictsZoneDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "district_id": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "zone": {
+                            "type": "string",
+                            "enum": [
+                                "RED",
+                                "GREEN",
+                                "ORANGE"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "district_id",
+                        "name",
+                        "zone"
+                    ]
+                }
+            }
         }
     },
     "paths": {
@@ -921,6 +952,22 @@
                     },
                     "400": {
                         "description": "Invalid Details"
+                    }
+                }
+            }
+        },
+        "/districts/zones/v1/": {
+            "get": {
+                "operationId": "get_district_wise_zone_details",
+                "summary": "Gives districts wise zone details based on the cases",
+                "description": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/DistrictsZoneDetailsResponse"
                     }
                 }
             }
