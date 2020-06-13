@@ -154,7 +154,9 @@
                 "item_name",
                 "description",
                 "brands",
-                "item_price"
+                "item_price",
+                "item_brand_id",
+                "item_quantity"
             ]
         },
         "SectionDetails": {
@@ -167,6 +169,9 @@
                 "section_name": {
                     "type": "string"
                 },
+                "section_note": {
+                    "type": "string"
+                },
                 "items": {
                     "type": "array",
                     "items": {
@@ -177,7 +182,43 @@
             "required": [
                 "section_id",
                 "section_name",
+                "section_note",
                 "items"
+            ]
+        },
+        "ClosedOrDoneFormDetails": {
+            "type": "object",
+            "properties": {
+                "item_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "item_name": {
+                    "type": "string"
+                },
+                "items_added": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "items_received": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "cost_incurred": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "is_item_out_of_stock": {
+                    "type": "boolean"
+                },
+            },
+            "required": [
+                "item_id",
+                "item_name",
+                "items_added",
+                "items_received",
+                "cost_incurred",
+                "is_item_out_of_stock",
             ]
         }
     },
@@ -249,10 +290,6 @@
             "schema": {
                 "type": "object",
                 "properties": {
-                    "form_id": {
-                        "type": "integer",
-                        "format": "int64"
-                    },
                     "form_name": {
                         "type": "string"
                     },
@@ -281,6 +318,38 @@
                     "instructions",
                     "sections",
                     "total_cost"
+                ]
+            }
+        },
+        "GetClosedOrDoneFormDetailsResponse": {
+            "description": "get_closed_or_done_form",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "total_items_added": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_items_received": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "total_cost_incurred": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/ClosedOrDoneFormDetails"
+                        }
+                    }
+                },
+                "required": [
+                    "total_items_added",
+                    "total_items_received",
+                    "total_cost_incurred",
+                    "items"
                 ]
             }
         }
@@ -361,6 +430,29 @@
                     },
                     "403": {
                         "description": "Invalid Credentials"
+                    }
+                }
+            }
+        },
+        "/forms/{form_id}/closed_or_done/v1": {
+            "get": {
+                "operationId": "get_closed_or_done_form_details",
+                "summary": "",
+                "security": [{
+                    "oauth": ["read"]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/FormIdParameter"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/GetClosedOrDoneFormDetailsResponse"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "403": {
+                        "description": "Not Found"
                     }
                 }
             }
