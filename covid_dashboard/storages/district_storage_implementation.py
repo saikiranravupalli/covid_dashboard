@@ -22,6 +22,7 @@ class DistrictStorageImplementation(DistrictStorageInterface):
 
         districts_day_wise_statistics_dtos = \
             self._get_district_wise_statistics_dtos()
+        print(districts_day_wise_statistics_dtos)
 
         return districts_day_wise_statistics_dtos
 
@@ -59,9 +60,13 @@ class DistrictStorageImplementation(DistrictStorageInterface):
                                         total_recovered=Sum('total_recovered'),
                                         total_deaths=Sum('total_deaths')
                                     )
-        district_cumulative_statistics_dto = \
-            self._get_day_wise_districts_cumulative_data(
-                district_day_wise_stats_dicts_list)
+
+        if district_day_wise_stats_dicts_list.exists():
+            district_cumulative_statistics_dto = \
+                self._get_day_wise_districts_cumulative_data(
+                    district_day_wise_stats_dicts_list)
+        else:
+            district_cumulative_statistics_dto = None
 
         return district_cumulative_statistics_dto
 
@@ -105,6 +110,9 @@ class DistrictStorageImplementation(DistrictStorageInterface):
                                total_recovered=Sum('total_recovered'),
                                total_deaths=Sum('total_deaths')
                            )
+
+        if not district_day_wise_dicts_list.exists():
+            return None
 
         name = district_day_wise_dicts_list[0]['mandal__district__name']
         added_districts_day_wise_dicts_list = \

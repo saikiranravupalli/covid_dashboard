@@ -17,8 +17,8 @@ from covid_dashboard.interactors.presenters.presenter_interface import \
     PresenterInterface
 
 class TestLoginInteractor:
-    def test_login_interactor_with_invalid_username_raises_error(self):
 
+    def test_login_interactor_with_invalid_username_raises_error(self):
         # Arrange
         username = 'invalidusername'
         password = 'invalid'

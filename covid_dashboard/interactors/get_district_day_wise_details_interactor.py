@@ -24,6 +24,9 @@ class DistrictDayWiseStatisticsInteractor:
             self.storage.get_day_wise_district_statistics(
                 district_id=district_id)
 
+        if day_wise_district_statistics_dtos is None:
+            return []
+
         response = \
             self.presenter.get_day_wise_district_statistics_response(
                 day_wise_district_statistics_dtos=day_wise_district_statistics_dtos

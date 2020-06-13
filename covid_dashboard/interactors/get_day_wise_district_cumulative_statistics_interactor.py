@@ -26,6 +26,9 @@ class DistrictDayWiseCumulativeStatisticsInteractor:
             self.storage.get_day_wise_district_cumulative_statistics(
                 district_id=district_id)
 
+        if day_wise_district_cumulative_statistics_dto is None:
+            return []
+
         updated_cumulative_statistics_dto = \
             self._add_day_wise_cumulative_statics(
                 day_wise_district_cumulative_statistics_dto.date_wise_details

@@ -21,7 +21,51 @@ districts_list =  [
         "state_id": 1
     },
     {
+        "name": "Vizianagaram",
+        "state_id": 1
+    },
+    {
+        "name": "Visakhapatnam",
+        "state_id": 1
+    },
+    {
+        "name": "West Godavari",
+        "state_id": 1
+    },
+    {
+        "name": "Prakasam",
+        "state_id": 1
+    },
+    {
+        "name": "Nellore",
+        "state_id": 1
+    },
+    {
+        "name": "Srikakulam",
+        "state_id": 1
+    },
+    {
+        "name": "Krishna",
+        "state_id": 1
+    },
+    {
+        "name": "YSR Kadapa",
+        "state_id": 1
+    },
+    {
         "name": "Guntur",
+        "state_id": 1
+    },
+    {
+        "name": "East Godavari",
+        "state_id": 1
+    },
+    {
+        "name": "Chittor",
+        "state_id": 1
+    },
+    {
+        "name": "Ananthapur",
         "state_id": 1
     }
 ]
@@ -36,12 +80,32 @@ mandals_list = [
         "district_id": 1
     },
     {
-        "name": "Tenali",
-        "district_id": 2
+        "name": "Atmakur",
+        "district_id": 1
     },
     {
-        "name": "Narasaraopeta",
-        "district_id": 2
+        "name": "Bethamcherla",
+        "district_id": 1
+    },
+    {
+        "name": "kallur",
+        "district_id": 1
+    },
+    {
+        "name": "Dhone",
+        "district_id": 1
+    },
+    {
+        "name": "Gudur",
+        "district_id": 1
+    },
+    {
+        "name": "Kodumuru",
+        "district_id": 1
+    },
+    {
+        "name": "Guntur",
+        "district_id": 10
     }
 ]
 
@@ -213,6 +277,216 @@ daily_statistics_list = [
         "total_recovered": 80,
         "total_deaths": 5,
         "mandal_id": 4
+    },
+    {
+        "for_date": date(2020, 6, 1),
+        "total_confirmed": 40,
+        "total_recovered": 20,
+        "total_deaths": 5,
+        "mandal_id": 5
+    },
+    {
+        "for_date": date(2020, 6, 2),
+        "total_confirmed": 50,
+        "total_recovered": 30,
+        "total_deaths": 10,
+        "mandal_id": 5
+    },
+    {
+        "for_date": date(2020, 6, 3),
+        "total_confirmed": 60,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 5
+    },
+    {
+        "for_date": date(2020, 6, 4),
+        "total_confirmed": 100,
+        "total_recovered": 20,
+        "total_deaths": 15,
+        "mandal_id": 5
+    },
+    {
+        "for_date": date(2020, 6, 5),
+        "total_confirmed": 140,
+        "total_recovered": 50,
+        "total_deaths": 25,
+        "mandal_id": 5
+    },
+    {
+        "for_date": date(2020, 6, 6),
+        "total_confirmed": 150,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 5
+    },
+    {
+        "for_date": date(2020, 6, 1),
+        "total_confirmed": 40,
+        "total_recovered": 20,
+        "total_deaths": 5,
+        "mandal_id": 6
+    },
+    {
+        "for_date": date(2020, 6, 2),
+        "total_confirmed": 50,
+        "total_recovered": 30,
+        "total_deaths": 10,
+        "mandal_id": 6
+    },
+    {
+        "for_date": date(2020, 6, 3),
+        "total_confirmed": 60,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 6
+    },
+    {
+        "for_date": date(2020, 6, 4),
+        "total_confirmed": 100,
+        "total_recovered": 20,
+        "total_deaths": 15,
+        "mandal_id": 6
+    },
+    {
+        "for_date": date(2020, 6, 5),
+        "total_confirmed": 140,
+        "total_recovered": 50,
+        "total_deaths": 25,
+        "mandal_id": 6
+    },
+    {
+        "for_date": date(2020, 6, 6),
+        "total_confirmed": 150,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 6
+    },
+    {
+        "for_date": date(2020, 6, 1),
+        "total_confirmed": 40,
+        "total_recovered": 20,
+        "total_deaths": 5,
+        "mandal_id": 7
+    },
+    {
+        "for_date": date(2020, 6, 2),
+        "total_confirmed": 50,
+        "total_recovered": 30,
+        "total_deaths": 10,
+        "mandal_id": 7
+    },
+    {
+        "for_date": date(2020, 6, 3),
+        "total_confirmed": 60,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 7
+    },
+    {
+        "for_date": date(2020, 6, 4),
+        "total_confirmed": 100,
+        "total_recovered": 20,
+        "total_deaths": 15,
+        "mandal_id": 7
+    },
+    {
+        "for_date": date(2020, 6, 5),
+        "total_confirmed": 140,
+        "total_recovered": 50,
+        "total_deaths": 25,
+        "mandal_id": 7
+    },
+    {
+        "for_date": date(2020, 6, 6),
+        "total_confirmed": 150,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 7
+    },
+    {
+        "for_date": date(2020, 6, 1),
+        "total_confirmed": 40,
+        "total_recovered": 20,
+        "total_deaths": 5,
+        "mandal_id": 8
+    },
+    {
+        "for_date": date(2020, 6, 2),
+        "total_confirmed": 50,
+        "total_recovered": 30,
+        "total_deaths": 10,
+        "mandal_id": 8
+    },
+    {
+        "for_date": date(2020, 6, 3),
+        "total_confirmed": 60,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 8
+    },
+    {
+        "for_date": date(2020, 6, 4),
+        "total_confirmed": 100,
+        "total_recovered": 20,
+        "total_deaths": 15,
+        "mandal_id": 8
+    },
+    {
+        "for_date": date(2020, 6, 5),
+        "total_confirmed": 140,
+        "total_recovered": 50,
+        "total_deaths": 25,
+        "mandal_id": 8
+    },
+    {
+        "for_date": date(2020, 6, 6),
+        "total_confirmed": 150,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 8
+    },
+    {
+        "for_date": date(2020, 6, 1),
+        "total_confirmed": 40,
+        "total_recovered": 20,
+        "total_deaths": 5,
+        "mandal_id": 9
+    },
+    {
+        "for_date": date(2020, 6, 2),
+        "total_confirmed": 50,
+        "total_recovered": 30,
+        "total_deaths": 10,
+        "mandal_id": 9
+    },
+    {
+        "for_date": date(2020, 6, 3),
+        "total_confirmed": 60,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id":9
+    },
+    {
+        "for_date": date(2020, 6, 4),
+        "total_confirmed": 100,
+        "total_recovered": 20,
+        "total_deaths": 15,
+        "mandal_id": 9
+    },
+    {
+        "for_date": date(2020, 6, 5),
+        "total_confirmed": 140,
+        "total_recovered": 50,
+        "total_deaths": 25,
+        "mandal_id": 9
+    },
+    {
+        "for_date": date(2020, 6, 6),
+        "total_confirmed": 150,
+        "total_recovered": 40,
+        "total_deaths": 15,
+        "mandal_id": 9
     }
 ]
 

@@ -24,8 +24,7 @@ class DistrictCumulativeStatisticsInteractor:
 
         district_cumulative_statistics_dto = \
             self.storage.get_district_cumulative_statistics(
-                till_date=till_date, district_id=district_id
-            )
+                till_date=till_date, district_id=district_id)
 
         if type(district_cumulative_statistics_dto) is str:
             response = self._make_alternate_response(
@@ -34,8 +33,7 @@ class DistrictCumulativeStatisticsInteractor:
             response = \
                 self.presenter.get_district_cumulative_statistics_response(
                     district_cumulative_statistics_dto=
-                    district_cumulative_statistics_dto
-                )
+                    district_cumulative_statistics_dto)
 
         return response
 
