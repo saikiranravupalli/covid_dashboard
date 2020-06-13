@@ -220,6 +220,114 @@
                 "cost_incurred",
                 "is_item_out_of_stock",
             ]
+        },
+        "TransactionsDetails": {
+            "type": "object",
+            "properties": {
+                "transaction_id": {
+                    "type": "integer"
+                },
+                "transaction_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "amount": {
+                    "type": "integer"
+                },
+                "transaction_type": {
+                    "type": "string"
+                },
+                "verification": {
+                    "type": "string"
+                },
+                "remarks": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "transaction_id",
+                "transaction_date",
+                "amount",
+                "transaction_type",
+                "verification",
+                "remarks"
+            ]
+        },
+        "TransactionsAndWalletBalance": {
+            "type": "object",
+            "properties": {
+                "wallet_balance": {
+                    "type": "integer"
+                },
+                "transactions_count": {
+                    "type": "integer"
+                },
+                "transactions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/TransactionsDetails"
+                    }
+                }
+            },
+            "required": [
+                "wallet_balance",
+                "transactions_count",
+                "transactions"
+            ]
+        },
+        "PayThroughDetails": {
+            "type": "object",
+            "properties": {
+                "upi_id": {
+                    "type": "string"
+                },
+                "qr_code": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "upi_id",
+                "qr_code"
+            ]
+        },
+        "FormDetails": {
+            "type": "object",
+            "properties": {
+                "form_id": {
+                    "type": "string",
+                    "format": "int64"
+                },
+                "form_name": {
+                    "type": "string"
+                },
+                "form_state": {
+                    "type": "string",
+                    "enum": [
+                        "Live",
+                        "Closed",
+                        "Done"
+                    ]
+                },
+                "close_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "expected_delivery_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "instructions": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "form_id",
+                "form_name",
+                "form_state",
+                "close_date",
+                "expected_delivery_date",
+                "instructions"
+            ]
         }
     },
     "parameters": {
@@ -272,6 +380,42 @@
                         "quantity"
                     ]
                 }
+            }
+        },
+        "NewTransactionParameter": {
+            "name": "transaction_request",
+            "in": "body",
+            "description": "Post transaction details to add money to wallet",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "amount_paid": {
+                        "type": "integer"
+                    },
+                    "transaction_mode": {
+                        "type": "string"
+                    },
+                    "transaction_id": {
+                        "type": "string"
+                    },
+                    "transaction_screenshot": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "amount_paid",
+                    "transaction_mode",
+                    "transaction_id",
+                    "transaction_screenshot"
+                ]
+            }
+        },
+        "CreateOrUpdateFormParameter": {
+            "name": "new_form",
+            "in": "body",
+            "description": "",
+            "schema": {
+                "$ref": "#/definitions/FormDetails"
             }
         }
     },
@@ -351,6 +495,18 @@
                     "total_cost_incurred",
                     "items"
                 ]
+            }
+        },
+        "TransactionsAndWalletBalanceResponse": {
+            "description": "Transaction Amounts and Wallet Balance",
+            "schema": {
+                "$ref": "#/definitions/TransactionsAndWalletBalance"
+            }
+        },
+        "PayThroughResponse": {
+            "description": "Details for an user to add money",
+            "schema": {
+                "$ref": "#/definitions/PayThroughDetails"
             }
         }
     },
@@ -453,6 +609,97 @@
                     },
                     "403": {
                         "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/user/transactions/v1/": {
+            "get": {
+                "operationId": "get_transactions_and_wallet_balance",
+                "summary": "User should be able to track my transaction amounts and see the balance amount",
+                "description": "User should be able to track transaction amounts and see the balance amount",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/OffsetParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/LimitParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/TransactionsAndWalletBalanceResponse"
+                    },
+                    "403": {
+                        "description": "Invalid Access"
+                    }
+                }
+            }
+        },
+        "/user/paythrough/v1/": {
+            "get": {
+                "operationId": "get_pay_through_details",
+                "summary": "User should be able get pay through details to add money",
+                "description": "User should be able get pay through details to add money",
+                "security": [{
+                    "oauth": [
+                        "read"
+                    ]
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/PayThroughResponse"
+                    },
+                    "403": {
+                        "description": "Invalid Access"
+                    }
+                }
+            }
+        },
+        "/user/add_balance/v1/": {
+            "post": {
+                "operationId": "add_amount_to_wallet",
+                "summary": "User should be able to add money",
+                "description": "User should add a transaction request by mentioning the amount paid, transa ction type, transaction id & transaction screenshot",
+                "security": [{
+                    "oauth": [
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/NewTransactionParameter"
+                }],
+                "responses": {
+                    "201": {
+                        "description": "Transaction requested Successfully"
+                    },
+                    "403": {
+                        "description": "Invalid Access"
+                    }
+                }
+            }
+        },
+        "/admin/forms/v1/": {
+            "post": {
+                "operationId": "create_or_update_form",
+                "summary": "Admin will create a form",
+                "description": "Admin will create a form in the form of a draft",
+                "security": [{
+                    "oauth": [
+                        "read",
+                        "write"
+                    ]
+                }],
+                "parameters": [{
+                    "$ref": "#/parameters/CreateOrUpdateFormParameter"
+                }],
+                "responses": {
+                    "201": {
+                        "description": "Form Created Successfully"
                     }
                 }
             }
