@@ -139,6 +139,14 @@
                 "item_price": {
                     "type": "integer",
                     "format": "int64"
+                },
+                "item_brand_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "item_quantity": {
+                    "type": "integer",
+                    "format": "int64"
                 }
             },
             "required": [
