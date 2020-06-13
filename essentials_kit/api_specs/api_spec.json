@@ -55,11 +55,11 @@
                 },
                 "close_date": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "date-time"
                 },
                 "expected_delivery_date": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "date-time"
                 },
                 "total_items": {
                     "type": "integer",
@@ -90,6 +90,87 @@
                 "estimated_cost",
                 "cost_incurred"
             ]
+        },
+        "BrandDetails": {
+            "type": "object",
+            "properties": {
+                "brand_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "brand_name": {
+                    "type": "string"
+                },
+                "min_quantity": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "max_quantity": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "brand_id",
+                "brand_name",
+                "min_quantity",
+                "max_quantity"
+            ]
+        },
+        "ItemDetails": {
+            "type": "object",
+            "properties": {
+                "item_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "item_name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "brands": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BrandDetails"
+                    }
+                },
+                "item_price": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            },
+            "required": [
+                "item_id",
+                "item_name",
+                "description",
+                "brands",
+                "item_price"
+            ]
+        },
+        "SectionDetails": {
+            "type": "object",
+            "properties": {
+                "section_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "section_name": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ItemDetails"
+                    }
+                }
+            },
+            "required": [
+                "section_id",
+                "section_name",
+                "items"
+            ]
         }
     },
     "parameters": {
@@ -106,6 +187,13 @@
             "description": "",
             "required": true,
             "type": "integer"
+        },
+        "FormIdParameter": {
+            "name": "form_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "integer"
         }
     },
     "responses": {
@@ -116,6 +204,46 @@
                 "items": {
                     "$ref": "#/definitions/UserForms"
                 }
+            }
+        },
+        "GetFormDetailsResponse": {
+            "description": "form_details",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "form_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "form_name": {
+                        "type": "string"
+                    },
+                    "closes_on": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "instructions": {
+                        "type": "string"
+                    },
+                    "sections": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/SectionDetails"
+                        }
+                    },
+                    "total_cost": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                },
+                "required": [
+                    "form_id",
+                    "form_name",
+                    "closes_on",
+                    "instructions",
+                    "sections",
+                    "total_cost"
+                ]
             }
         }
     },
@@ -143,6 +271,24 @@
                     },
                     "403": {
                         "description": "Invalid Access"
+                    }
+                }
+            }
+        },
+        "/forms/{form_id}/v1/": {
+            "get": {
+                "operationId": "get_form_details",
+                "summary": "Shows the form details",
+                "description": "",
+                "parameters": [{
+                    "$ref": "#/parameters/FormIdParameter"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/GetFormDetailsResponse"
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     }
                 }
             }
