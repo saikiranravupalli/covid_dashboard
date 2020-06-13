@@ -194,6 +194,36 @@
             "description": "",
             "required": true,
             "type": "integer"
+        },
+        "FormUpdateParameter": {
+            "name": "form_update_parameter",
+            "in": "body",
+            "description": "",
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "item_id": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "brand_id": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "quantity": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    "required": [
+                        "item_id",
+                        "brand_id",
+                        "quantity"
+                    ]
+                }
+            }
         }
     },
     "responses": {
@@ -280,6 +310,11 @@
                 "operationId": "get_form_details",
                 "summary": "Shows the form details",
                 "description": "",
+                "security": [{
+                    "oauth": [
+                        "read", "write"
+                    ]
+                }],
                 "parameters": [{
                     "$ref": "#/parameters/FormIdParameter"
                 }],
@@ -289,6 +324,35 @@
                     },
                     "400": {
                         "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/forms/{form_id}/update/v1/": {
+            "post": {
+                "operationId": "update_form",
+                "summary": "updates the given form",
+                "security": [{
+                    "oauth": [
+                        "read", "write"
+                    ]
+                }],
+                "parameters": [{
+                        "$ref": "#/parameters/FormIdParameter"
+                    },
+                    {
+                        "$ref": "#/parameters/FormUpdateParameter"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created Successfully"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "403": {
+                        "description": "Invalid Credentials"
                     }
                 }
             }
