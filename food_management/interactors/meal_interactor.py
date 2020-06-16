@@ -79,7 +79,10 @@ class MealInteractor:
     @staticmethod
     def _validate_items_quantity(item_dtos):
         invalid_items_quantity = [
-            {item_dto.item_id: item_dto.quantity}
+            {
+                "item_id": item_dto.item_id,
+                "item_quantity":item_dto.quantity
+            }
             for item_dto in item_dtos
             if item_dto.quantity < 0
         ]
