@@ -97,9 +97,11 @@ def test_meal_interactor_with_invalid_meal_preference_item_ids_raises_exception(
 
 def test_meal_interactor_with_duplicate_meal_item_ids_raises_exception(
     duplicate_meal_dto):
+
     # Arrange
     user_id = 1
     meal_id = duplicate_meal_dto.meal_id
+    item_ids = [1]
     storage = create_autospec(StorageInterface)
     presenter = create_autospec(PresenterInterface)
     interactor = MealInteractor(storage=storage)
@@ -118,7 +120,8 @@ def test_meal_interactor_with_duplicate_meal_item_ids_raises_exception(
     err = presenter.raise_exception_for_duplicate_item_ids.\
         call_args.kwargs['err']
     presenter.raise_exception_for_duplicate_item_ids.\
-        assert_called_once_with(err=err)
+        assert_called_once()
+    assert err.args[0] == item_ids
 
 def test_meal_interactor_with_invalid_meal_item_quantity_raises_exception(
     invalid_meal_dto):
@@ -127,6 +130,7 @@ def test_meal_interactor_with_invalid_meal_item_quantity_raises_exception(
     user_id = 1
     meal_id = invalid_meal_dto.meal_id
     item_ids = [1]
+    invalid_items_quantity = invalid_meal_dto.items
     storage = create_autospec(StorageInterface)
     presenter = create_autospec(PresenterInterface)
     interactor = MealInteractor(storage=storage)
@@ -150,7 +154,8 @@ def test_meal_interactor_with_invalid_meal_item_quantity_raises_exception(
     err = presenter.raise_exception_for_invalid_item_quantity.\
         call_args.kwargs['err']
     presenter.raise_exception_for_invalid_item_quantity.\
-        assert_called_once_with(err=err)
+        assert_called_once()
+    assert err.args[0] == invalid_items_quantity
 
 def test_meal_interactor_with_invalid_meal_time_raises_exception(meal_dto):
 
@@ -204,7 +209,7 @@ def test_meal_interactor_with_valid_meal_details(meal_dto):
     storage.validate_item_ids.assert_called_once_with(
         item_ids=item_ids)
     storage.validate_preference_type_item_ids.assert_called_once_with(
-        item_ids= item_ids)
+        item_ids=item_ids)
     storage.create_or_update_meal_for_user.assert_called_once_with(
         user_id=user_id,
         meal_dto=meal_dto
