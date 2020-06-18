@@ -90,3 +90,8 @@ class StorageInterface(ABC):
     def get_replies_count(self, comment_ids: List[int]) -> \
         List[CommentRepliesCountDTO]:
         pass
+
+    @abstractmethod
+    def get_domain_post_ids(self, domain_id: int, offset: int, limit: int) -> \
+        List[int]:
+        pass

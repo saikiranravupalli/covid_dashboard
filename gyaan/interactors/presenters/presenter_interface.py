@@ -3,7 +3,7 @@ from abc import abstractmethod
 
 from gyaan.exceptions.exceptions import InvalidPostIds
 from gyaan.interactors.presenters.dtos import DomainDetailsDTO, \
-    CompletePostDetailsDTO
+    CompletePostDetailsDTO, DomainWithPostsDetailsDTO
 
 
 class PresenterInterface(ABC):
@@ -28,4 +28,22 @@ class PresenterInterface(ABC):
     @abstractmethod
     def get_posts_response(self, 
                            complete_post_details_dto: CompletePostDetailsDTO):
+        pass
+
+    @abstractmethod
+    def get_domain_posts_response(
+        self, complete_post_details_dto: CompletePostDetailsDTO):
+        pass
+
+    @abstractmethod
+    def raise_exception_for_invalid_limit_length(self):
+        pass
+
+    @abstractmethod
+    def raise_exception_for_invalid_offset_length(self):
+        pass
+
+    @abstractmethod
+    def get_domain_with_posts_response(
+        self, domain_with_posts_details_dto: DomainWithPostsDetailsDTO):
         pass

@@ -6,7 +6,7 @@ from gyaan.interactors.storages.dtos import DomainDTO, DomainStatsDTO, \
     CommentRepliesCountDTO, CommentReactionsCountDTO
 from gyaan.interactors.presenters.dtos import CompletePostDetailsDTO
 from gyaan.interactors.presenters.dtos import DomainDetailsDTO, \
-    CompletePostDetailsDTO
+    CompletePostDetailsDTO, DomainWithPostsDetailsDTO
 
 @pytest.fixture
 def domain_dto():
@@ -327,3 +327,11 @@ def complete_post_details(post_details,
         users=user_details
     )
     return complete_post_details
+
+@pytest.fixture
+def domain_with_posts_details(complete_post_details, domain_details_dto):
+    domain_with_posts_details = DomainWithPostsDetailsDTO(
+        domain_details=domain_details_dto,
+        domain_posts=complete_post_details
+    )
+    return domain_with_posts_details

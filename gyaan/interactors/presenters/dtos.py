@@ -28,3 +28,8 @@ class CompletePostDetailsDTO:
     post_tags: List[PostTagsDTO]
     tags: List[TagDTO]
     users: List[UserDetailsDTO]
+
+@dataclass()
+class DomainWithPostsDetailsDTO:
+    domain_details: DomainDetailsDTO
+    domain_posts: CompletePostDetailsDTO
