@@ -30,7 +30,7 @@ class DistrictsDayWiseCumulativeStatisticsInteractor:
         response = \
             self.presenter.get_day_wise_districts_cumulative_statistics_response(
                 day_wise_districts_cumulative_dtos=
-                    updated_cumulative_statistics_dtos
+                updated_cumulative_statistics_dtos
             )
 
         return response
