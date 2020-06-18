@@ -24,7 +24,7 @@ class StorageInterface(ABC):
         pass
 
     @abstractmethod
-    def create_user_response(self, question_id: int,
+    def create_user_response(self, user_id: int, question_id: int,
                              user_submitted_response: int) -> int:
         pass
 

@@ -133,6 +133,7 @@ def test_validate_user_response_with_valid_details_returns_user_response():
         question_id=question_id)
     storage.get_question_type.assert_called_once_with(question_id=question_id)
     storage.create_user_response.assert_called_once_with(
+        user_id=user_id,
         question_id=question_id,
         user_submitted_response=user_submitted_response)
     presenter.submit_form_response_return.assert_called_once_with(

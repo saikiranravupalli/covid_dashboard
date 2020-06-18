@@ -13,6 +13,7 @@ class MCQSubmitResponseInteractor(BaseSubmitFormResponseInteractor):
                  user_id: int, user_submitted_response: int):
 
         super().__init__(storage, question_id, form_id, user_id)
+        self.user_id = user_id
         self.question_id = question_id
         self.user_submitted_response = user_submitted_response
 
@@ -36,6 +37,7 @@ class MCQSubmitResponseInteractor(BaseSubmitFormResponseInteractor):
 
     def _create_user_response(self):
         response_id = self.storage.create_user_response(
+            user_id=self.user_id,
             question_id=self.question_id,
             user_submitted_response=self.user_submitted_response
         )
