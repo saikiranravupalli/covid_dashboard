@@ -30,12 +30,7 @@ def test_validate_user_response_with_invalid_user_response_raises_exception():
 
     # Act
     with pytest.raises(BadRequest):
-        interactor.submit_form_response_wrapper(
-            user_id=user_id,
-            form_id=form_id,
-            question_id=question_id,
-            presenter=presenter
-        )
+        interactor.submit_form_response_wrapper(presenter=presenter)
 
     # Assert
     storage.validate_form_id.assert_called_once_with(form_id=form_id)
@@ -72,12 +67,7 @@ def test_validate_user_response_with_invalid_question_type_raises_exception():
 
     # Act
     with pytest.raises(BadRequest):
-        interactor.submit_form_response_wrapper(
-            user_id=user_id,
-            form_id=form_id,
-            question_id=question_id,
-            presenter=presenter
-        )
+        interactor.submit_form_response_wrapper(presenter=presenter)
 
     # Assert
     storage.validate_form_id.assert_called_once_with(form_id=form_id)
@@ -115,12 +105,8 @@ def test_validate_user_response_with_valid_details_returns_user_response():
     presenter.submit_form_response_return.return_value = response_id
 
     # Act
-    actual_response_id = interactor.submit_form_response_wrapper(
-            user_id=user_id,
-            form_id=form_id,
-            question_id=question_id,
-            presenter=presenter
-        )
+    actual_response_id = \
+        interactor.submit_form_response_wrapper(presenter=presenter)
 
     # Assert
     assert actual_response_id == response_id

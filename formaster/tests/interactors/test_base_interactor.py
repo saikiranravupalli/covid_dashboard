@@ -27,12 +27,7 @@ def test_base_interactor_with_invalid_form_id_raises_exception():
 
     # Act
     with pytest.raises(NotFound):
-        interactor.submit_form_response_wrapper(
-            user_id=user_id,
-            question_id=question_id,
-            form_id=invalid_form_id,
-            presenter=presenter
-        )
+        interactor.submit_form_response_wrapper(presenter=presenter)
 
     # Assert
     storage.validate_form_id.assert_called_once_with(form_id=invalid_form_id)
@@ -57,12 +52,7 @@ def test_base_interactor_with_invalid_question_id_raises_exception():
 
     # Act
     with pytest.raises(NotFound):
-        interactor.submit_form_response_wrapper(
-            user_id=user_id,
-            question_id=question_id,
-            form_id=form_id,
-            presenter=presenter
-        )
+        interactor.submit_form_response_wrapper(presenter=presenter)
 
     # Assert
     storage.validate_form_id.assert_called_once_with(form_id=form_id)
@@ -91,12 +81,7 @@ def test_base_interactor_with_question_does_not_belong_to_form_raises_exception(
 
     # Act
     with pytest.raises(BadRequest):
-        interactor.submit_form_response_wrapper(
-            user_id=user_id,
-            question_id=question_id,
-            form_id=form_id,
-            presenter=presenter
-        )
+        interactor.submit_form_response_wrapper(presenter=presenter)
 
     # Assert
     storage.validate_form_id.assert_called_once_with(form_id=form_id)
@@ -126,12 +111,7 @@ def test_base_interactor_with_form_closed_raises_exception():
 
     # Act
     with pytest.raises(BadRequest):
-        interactor.submit_form_response_wrapper(
-            user_id=user_id,
-            question_id=question_id,
-            form_id=form_id,
-            presenter=presenter
-        )
+        interactor.submit_form_response_wrapper(presenter=presenter)
 
     # Assert
     storage.validate_form_id.assert_called_once_with(form_id=form_id)

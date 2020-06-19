@@ -15,3 +15,6 @@ class InvalidUserResponse(Exception):
 
 class InvalidQuestionType(Exception):
     pass
+
+class MultipleResponsesCaptured(Exception):
+    pass

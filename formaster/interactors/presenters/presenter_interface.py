@@ -31,3 +31,7 @@ class PresenterInterface(ABC):
     @abstractmethod
     def raise_exception_for_invalid_question_type(self):
         pass
+
+    @abstractmethod
+    def raise_exception_for_multiple_responses_captured(self):
+        pass
