@@ -21,9 +21,7 @@ class DistrictsDayWiseCumulativeStatisticsInteractor:
             self.storage.get_day_wise_districts_cumulative_statistics()
 
         updated_cumulative_statistics_dtos = [
-            self._add_day_wise_cumulative_statics(
-                district_day_wise_stats
-            )
+            self._add_day_wise_cumulative_statics(district_day_wise_stats)
             for district_day_wise_stats in day_wise_districts_statistics_dtos
         ]
 
