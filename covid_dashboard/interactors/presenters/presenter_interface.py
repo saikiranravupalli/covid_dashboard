@@ -8,7 +8,6 @@ from covid_dashboard.interactors.storages.dtos import \
     DistrictDayWiseCumulativeStatisticsDto, DistrictOnDateStatisticsDto, \
     MandalsDayWiseCumulativeStatisticsDto, DistrictDailyStatisticsDto, \
     DistrictZonesDto
-
 class PresenterInterface(ABC):
 
     @abstractmethod
