@@ -43,8 +43,7 @@ class DomainWithPostsInteractor:
             user_id=user_id, domain_id=domain_id)
 
         from gyaan.interactors.domain_posts import DomainPostsInteractor
-        domain_posts_interactor = DomainPostsInteractor(
-            storage=self.storage)
+        domain_posts_interactor = DomainPostsInteractor(storage=self.storage)
         domain_posts = domain_posts_interactor.get_domain_posts(
             user_id=user_id,
             domain_id=domain_id,
