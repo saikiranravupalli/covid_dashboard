@@ -67,6 +67,5 @@ class TextOrMCQSubmitFormResponseInteractor():
         )
 
         response_id = interactor.submit_form_response()
-        print(response_id)
 
         return response_id
