@@ -1,5 +1,5 @@
 """
-# TODO: Update test case description
+# TODO: get_day_wise_cumulative_mandal_details with invalid district_id raises error
 """
 
 from django_swagger_utils.utils.test import CustomAPITestCase
@@ -28,6 +28,10 @@ class TestCase01GetDayWiseCumulativeMandalDetailsAPITestCase(CustomAPITestCase):
     request_method = REQUEST_METHOD
     url_suffix = URL_SUFFIX
     test_case_dict = TEST_CASE
+
+    def setupUser(self, username, password):
+        super(TestCase01GetDayWiseCumulativeMandalDetailsAPITestCase, self).\
+            setupUser(username=username, password=password)
 
     def test_case(self):
         self.default_test_case() # Returns response object.

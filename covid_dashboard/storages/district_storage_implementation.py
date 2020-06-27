@@ -153,6 +153,7 @@ class DistrictStorageImplementation(DistrictStorageInterface):
         return complete_districts_day_wise_dicts_list
         
     def _get_district_cumulative_statistics_dto(self, till_date, district_id):
+
         district_cumulative_dict_list = \
             DailyStatistics.objects.filter(
                 for_date__lte=till_date,

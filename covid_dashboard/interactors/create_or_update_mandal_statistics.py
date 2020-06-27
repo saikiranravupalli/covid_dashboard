@@ -31,7 +31,7 @@ class CreateOrUpdateMandalStatisticsInteractor:
 
         try:
             self.mandal_storage.is_mandal_stats_exists(for_date=for_date,
-                                                         mandal_id=mandal_id)
+                                                       mandal_id=mandal_id)
         except InvalidMandalStatistics:
             self.mandal_storage.create_mandal_statistics(
                 for_date=for_date, total_confirmed=total_confirmed,

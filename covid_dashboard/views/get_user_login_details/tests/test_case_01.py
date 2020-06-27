@@ -1,14 +1,14 @@
 """
-# TODO: Update test case description
+# TODO: get_user_login_details
 """
 
-from django_swagger_utils.utils.test import CustomAPITestCase
+from covid_dashboard.utils.custom_test_utils import CustomTestUtils
 from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX
 
 REQUEST_BODY = """
 {
-    "username": "string",
-    "password": "string"
+    "username": "user1",
+    "password": "12345"
 }
 """
 
@@ -17,13 +17,13 @@ TEST_CASE = {
         "path_params": {},
         "query_params": {},
         "header_params": {},
-        "securities": {"oauth": {"tokenUrl": "http://localhost:8080/o/token", "flow": "password", "scopes": ["write"], "type": "oauth2"}},
-        "body": REQUEST_BODY,
+        "securities": {},
+        "body": REQUEST_BODY
     },
 }
 
 
-class TestCase01GetUserLoginDetailsAPITestCase(CustomAPITestCase):
+class TestCase01GetUserLoginDetailsAPITestCase(CustomTestUtils):
     app_name = APP_NAME
     operation_name = OPERATION_NAME
     request_method = REQUEST_METHOD
@@ -31,6 +31,6 @@ class TestCase01GetUserLoginDetailsAPITestCase(CustomAPITestCase):
     test_case_dict = TEST_CASE
 
     def test_case(self):
-        self.default_test_case() # Returns response object.
-        # Which can be used for further response object checks.
-        # Add database state checks here.
+        self.create_user()
+        self.default_test_case()
+q

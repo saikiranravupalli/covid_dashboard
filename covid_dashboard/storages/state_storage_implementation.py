@@ -342,6 +342,8 @@ class StateStorageImplementation(StateStorageInterface):
             for district_id in districts_names_dict.keys()
             if district_id not in district_ids_list
         ]
+
+        districts_cumulative_dicts_list = list(districts_cumulative_dicts_list)
         districts_cumulative_dicts_list += prepared_district_dicts
 
         for district_dict in districts_cumulative_dicts_list:
