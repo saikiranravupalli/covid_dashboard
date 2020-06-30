@@ -6,7 +6,9 @@ REQUEST_METHOD = "get"
 URL_SUFFIX = "districts/{district_id}/day_wise/cumulative/v1/"
 
 from .test_case_01 import TestCase01GetDayWiseCumulativeMandalDetailsAPITestCase
+from .test_case_02 import TestCase02GetDayWiseCumulativeMandalDetailsAPITestCase
 
 __all__ = [
-    "TestCase01GetDayWiseCumulativeMandalDetailsAPITestCase"
+    "TestCase01GetDayWiseCumulativeMandalDetailsAPITestCase",
+    "TestCase02GetDayWiseCumulativeMandalDetailsAPITestCase"
 ]

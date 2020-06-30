@@ -218,26 +218,6 @@
         }
     },
     "parameters": {
-        "UserDetailsParameter": {
-            "name": "user_details",
-            "in": "body",
-            "description": "",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "username": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "username",
-                    "password"
-                ]
-            }
-        },
         "MandalParameter": {
             "name": "mandal_id",
             "in": "path",
@@ -319,28 +299,6 @@
         }
     },
     "responses": {
-        "UserDetailsResponse": {
-            "description": "",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "access_token": {
-                        "type": "string"
-                    },
-                    "refresh_token": {
-                        "type": "string"
-                    },
-                    "is_admin": {
-                        "type": "boolean"
-                    }
-                },
-                "required": [
-                    "access_token",
-                    "refresh_token",
-                    "is_admin"
-                ]
-            }
-        },
         "StateCumulativeCovidDetailsResponse": {
             "description": "",
             "schema": {
@@ -694,24 +652,6 @@
         }
     },
     "paths": {
-        "/login/v1/": {
-            "post": {
-                "operationId": "get_user_login_details",
-                "summary": "get user login details",
-                "description": "",
-                "parameters": [{
-                    "$ref": "#/parameters/UserDetailsParameter"
-                }],
-                "responses": {
-                    "200": {
-                        "$ref": "#/responses/UserDetailsResponse"
-                    },
-                    "400": {
-                        "description": "Invalid details"
-                    }
-                }
-            }
-        },
         "/state/cumulative/v1/": {
             "post": {
                 "operationId": "get_cumulative_state_details",

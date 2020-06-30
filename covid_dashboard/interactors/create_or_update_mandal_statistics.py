@@ -2,17 +2,16 @@ from covid_dashboard.exceptions.exceptions import InvalidMandal, \
     InvalidMandalStatistics
 from covid_dashboard.interactors.storages.mandal_storage_interface import \
     MandalStorageInterface
-from covid_dashboard.interactors.storages.user_storage_interface import \
-    UserStorageInterface
 from covid_dashboard.interactors.presenters.presenter_interface import \
     PresenterInterface
+from covid_dashboard.adapters.service_adapter import get_service_adapter
 
 class CreateOrUpdateMandalStatisticsInteractor:
+
     def __init__(self, mandal_storage: MandalStorageInterface,
-                 user_storage: UserStorageInterface,
                  presenter: PresenterInterface):
+
         self.mandal_storage = mandal_storage
-        self.user_storage = user_storage
         self.presenter = presenter
 
     def create_or_update_mandal_statistics(self,
@@ -31,7 +30,7 @@ class CreateOrUpdateMandalStatisticsInteractor:
 
         try:
             self.mandal_storage.is_mandal_stats_exists(for_date=for_date,
-                                                         mandal_id=mandal_id)
+                                                       mandal_id=mandal_id)
         except InvalidMandalStatistics:
             self.mandal_storage.create_mandal_statistics(
                 for_date=for_date, total_confirmed=total_confirmed,
@@ -48,7 +47,13 @@ class CreateOrUpdateMandalStatisticsInteractor:
             self.presenter.raise_exception_for_invalid_positive_number()
 
     def _check_is_valid_user_admin(self, user_id):
-        is_user_admin = self.user_storage.is_user_admin(user_id)
+
+        service_adapter = get_service_adapter()
+
+        user_details_dto = \
+            service_adapter.auth_service.get_user_dto(user_id=user_id)
+
+        is_user_admin = user_details_dto.is_admin
         is_invalid_user_admin = not is_user_admin
 
         if is_invalid_user_admin:

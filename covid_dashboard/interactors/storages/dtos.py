@@ -3,7 +3,7 @@ from typing import List
 from datetime import date
 
 @dataclass()
-class UserDetailsDto:
+class UserDetailsDTO:
     user_id: int
     is_admin: bool
 

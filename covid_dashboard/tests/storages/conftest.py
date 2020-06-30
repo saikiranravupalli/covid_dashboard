@@ -1,9 +1,9 @@
 import pytest
 from datetime import datetime, date
-from covid_dashboard.models import User, DailyStatistics, \
+from covid_dashboard.models import DailyStatistics, \
     Mandal, District, State
 from covid_dashboard.interactors.storages.dtos import \
-    UserDetailsDto, DistrictActiveCasesDto, StateCumulativeStatisticsDto, \
+    DistrictActiveCasesDto, StateCumulativeStatisticsDto, \
     StateDayWiseCumulativeStatisticsDto, DistrictDayWiseStatisticsDto, \
     DistrictsDayWiseCumulativeStatisticsDto, DistrictStatisticsDto, \
     StateStatisticsDto, MandalActiveCasesDto, DistrictCumulativeStatisticsDto,\
@@ -113,33 +113,6 @@ def daily_statistics_list():
         }
     ]
     return daily_statistics
-
-@pytest.fixture()
-def user():
-    user = User.objects.create(
-        username='user_1'
-    )
-    user.set_password('password')
-    user.save()
-    return user
-
-@pytest.fixture()
-def superuser():
-    user = User.objects.create(
-        username='user_1',
-        is_admin=True
-    )
-    user.set_password('password')
-    user.save()
-    return user
-
-@pytest.fixture()
-def user_dto():
-    user_dto = UserDetailsDto(
-        user_id=1,
-        is_admin=False
-    )
-    return user_dto
 
 @pytest.fixture()
 def state():

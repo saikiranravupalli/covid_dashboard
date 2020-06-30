@@ -1,11 +1,9 @@
-from .user import User
 from .state import State
 from .district import District
 from .statistics import DailyStatistics
 from .mandal import Mandal
 
 __all__ = [
-    'User',
     'State',
     'District',
     'DailyStatistics',
