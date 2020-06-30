@@ -1,21 +1,22 @@
 import pytest
 from django_swagger_utils.drf_server.exceptions import BadRequest, Forbidden
-from mock import create_autospec
+from unittest.mock import create_autospec, patch
 
 from covid_dashboard.exceptions.exceptions import InvalidMandal, \
     InvalidMandalStatistics
-from covid_dashboard.interactors.storages.user_storage_interface import \
-    UserStorageInterface
 from covid_dashboard.interactors.storages.mandal_storage_interface import \
     MandalStorageInterface
 from covid_dashboard.interactors.presenters.presenter_interface import \
     PresenterInterface
 from covid_dashboard.interactors.create_or_update_mandal_statistics import \
     CreateOrUpdateMandalStatisticsInteractor
+from covid_dashboard_auth.interactors.storages.dtos import UserDetailsDTO
 
 class TestCreateOrUpdateMandalStatisticsInteractor:
 
-    def test_given_invalid_admin_raises_exception(self):
+    @patch('covid_dashboard_auth.interfaces.service_interface.ServiceInterface.get_user_dto')
+    def test_given_invalid_admin_raises_exception(self, get_user_dto):
+
         # Arrange
         invalid_user_admin = 1
         mandal_id = 1
@@ -23,15 +24,17 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
         total_confirmed=10
         total_recovered=2
         total_deaths=3
-        user_storage = create_autospec(UserStorageInterface)
         mandal_storage = create_autospec(MandalStorageInterface)
         presenter = create_autospec(PresenterInterface)
-        user_storage.is_user_admin.return_value = False
+        get_user_dto.return_value = UserDetailsDTO(
+            user_id=1,
+            is_admin=False
+        )
         presenter.raise_exception_for_invalid_user_admin.side_effect = \
             Forbidden
+
         interactor = CreateOrUpdateMandalStatisticsInteractor(
             mandal_storage=mandal_storage,
-            user_storage=user_storage,
             presenter=presenter
         )
 
@@ -47,11 +50,10 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
             )
 
         # Assert
-        user_storage.is_user_admin.assert_called_once_with(
-            user_id=invalid_user_admin)
         presenter.raise_exception_for_invalid_user_admin.assert_called_once()
 
-    def test_given_invalid_mandal_id_raises_exception(self):
+    @patch('covid_dashboard_auth.interfaces.service_interface.ServiceInterface.get_user_dto')
+    def test_given_invalid_mandal_id_raises_exception(self, get_user_dto):
 
         # Arrange
         invalid_mandal_id = -1
@@ -60,17 +62,18 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
         total_confirmed=10
         total_recovered=2
         total_deaths=3
-        user_storage = create_autospec(UserStorageInterface)
         mandal_storage = create_autospec(MandalStorageInterface)
         presenter = create_autospec(PresenterInterface)
-        user_storage.is_user_admin.return_value = True
+        get_user_dto.return_value = UserDetailsDTO(
+            user_id=1,
+            is_admin=True
+        )
         mandal_storage.is_valid_mandal_id.side_effect = InvalidMandal
         presenter.raise_exception_for_invalid_mandal_id.side_effect = \
             BadRequest
 
         interactor = CreateOrUpdateMandalStatisticsInteractor(
             mandal_storage=mandal_storage,
-            user_storage=user_storage,
             presenter=presenter
         )
 
@@ -86,7 +89,6 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
             )
 
         # Assert
-        user_storage.is_user_admin.assert_called_once_with(user_id=user_id)
         mandal_storage.is_valid_mandal_id.assert_called_once_with(
             mandal_id=invalid_mandal_id
         )
@@ -112,7 +114,6 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
         invalid_total_confirmed=total_confirmed
         total_recovered=total_recovered
         total_deaths=total_deaths
-        user_storage = create_autospec(UserStorageInterface)
         mandal_storage = create_autospec(MandalStorageInterface)
         presenter = create_autospec(PresenterInterface)
         presenter.raise_exception_for_invalid_positive_number.side_effect = \
@@ -120,7 +121,6 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
 
         interactor = CreateOrUpdateMandalStatisticsInteractor(
             mandal_storage=mandal_storage,
-            user_storage=user_storage,
             presenter=presenter
         )
 
@@ -139,6 +139,7 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
         presenter.raise_exception_for_invalid_positive_number\
                  .assert_called_once()
 
+    @patch('covid_dashboard_auth.interfaces.service_interface.ServiceInterface.get_user_dto')
     @pytest.mark.parametrize(
         "user_id, mandal_id, total_confirmed, total_recovered, total_deaths, for_date",
         [
@@ -146,7 +147,7 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
         ]
     )
     def test_given_positive_number_or_zero_as_input_creates_mandal_statistics(self,
-        user_id, mandal_id, total_confirmed, total_recovered,
+        get_user_dto, user_id, mandal_id, total_confirmed, total_recovered,
         total_deaths, for_date):
 
         # Arrange
@@ -155,16 +156,18 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
         total_confirmed=total_confirmed
         total_recovered=total_recovered
         total_deaths=total_deaths
-        user_storage = create_autospec(UserStorageInterface)
+        user_details_dto = UserDetailsDTO(
+            user_id=1,
+            is_admin=True
+        )
         mandal_storage = create_autospec(MandalStorageInterface)
         presenter = create_autospec(PresenterInterface)
-        user_storage.is_user_admin.return_value = True
         mandal_storage.is_mandal_stats_exists.side_effect = \
             InvalidMandalStatistics
 
+        get_user_dto.return_value = user_details_dto
         interactor = CreateOrUpdateMandalStatisticsInteractor(
             mandal_storage=mandal_storage,
-            user_storage=user_storage,
             presenter=presenter
         )
 
@@ -179,7 +182,6 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
         )
 
         # Assert
-        user_storage.is_user_admin.assert_called_once_with(user_id=user_id)
         mandal_storage.is_valid_mandal_id.assert_called_once_with(
             mandal_id=mandal_id
         )
@@ -194,7 +196,8 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
             mandal_id=mandal_id
         )
 
-    def test_given_update_mandal_stats_if_already_exists_results_update_reaction(self):
+    @patch('covid_dashboard_auth.interfaces.service_interface.ServiceInterface.get_user_dto')
+    def test_given_update_mandal_stats_if_already_exists_results_update_reaction(self, get_user_dto):
 
         # Arrange
         mandal_id = 1
@@ -203,15 +206,16 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
         total_confirmed=10
         total_recovered=2
         total_deaths=3
-        user_storage = create_autospec(UserStorageInterface)
+        get_user_dto.return_value = UserDetailsDTO(
+            user_id=1,
+            is_admin=True
+        )
         mandal_storage = create_autospec(MandalStorageInterface)
         presenter = create_autospec(PresenterInterface)
-        user_storage.is_user_admin.return_value = True
         mandal_storage.is_mandal_stats_exists.return_value = True
 
         interactor = CreateOrUpdateMandalStatisticsInteractor(
             mandal_storage=mandal_storage,
-            user_storage=user_storage,
             presenter=presenter
         )
 
@@ -226,7 +230,6 @@ class TestCreateOrUpdateMandalStatisticsInteractor:
         )
 
         # Assert
-        user_storage.is_user_admin.assert_called_once_with(user_id=user_id)
         mandal_storage.is_valid_mandal_id.assert_called_once_with(
             mandal_id=mandal_id
         )

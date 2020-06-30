@@ -6,7 +6,9 @@ REQUEST_METHOD = "post"
 URL_SUFFIX = "districts/{district_id}/for_date/statistics/v1/"
 
 from .test_case_01 import TestCase01GetDistrictStatsOnGivenDateAPITestCase
+from .test_case_02 import TestCase02GetDistrictStatsOnGivenDateAPITestCase
 
 __all__ = [
-    "TestCase01GetDistrictStatsOnGivenDateAPITestCase"
+    "TestCase01GetDistrictStatsOnGivenDateAPITestCase",
+    "TestCase02GetDistrictStatsOnGivenDateAPITestCase"
 ]

@@ -339,4 +339,4 @@ MOCK_X_IB_REQUEST_ID = True
 
 STAGE = os.environ.get("STAGE", "local")
 
-AUTH_USER_MODEL = 'covid_dashboard.User'
+AUTH_USER_MODEL = 'covid_dashboard_auth.User'

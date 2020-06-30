@@ -16,7 +16,7 @@ REQUEST_BODY = """
 
 TEST_CASE = {
     "request": {
-        "path_params": {"mandal_id": "1234"},
+        "path_params": {"mandal_id": "1"},
         "query_params": {},
         "header_params": {},
         "securities": {
