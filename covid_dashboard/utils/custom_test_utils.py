@@ -19,9 +19,9 @@ class CustomTestUtils(CustomAPITestCase):
         state = StateFactory()
         districts = DistrictFactory.create_batch(5, state=state)
 
-        mandals = []
+        mandals_list = []
         for district in districts:
-            mandals += MandalFactory.create_batch(2, district=district)
+            mandals_list += MandalFactory.create_batch(2, district=district)
 
-        for mandal in mandals:
+        for mandal in mandals_list:
             DailyStatisticsFactory.create_batch(5, mandal=mandal)
