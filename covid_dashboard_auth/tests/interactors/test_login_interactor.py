@@ -6,14 +6,14 @@ from common.dtos import UserAuthTokensDTO
 from common.oauth2_storage import OAuth2SQLStorage
 from common.oauth_user_auth_tokens_service import \
     OAuthUserAuthTokensService
-from covid_dashboard.interactors.storages.dtos import UserDetailsDto
-from covid_dashboard.exceptions.exceptions import InvalidUsername, \
+from covid_dashboard_auth.interactors.storages.dtos import UserDetailsDto
+from covid_dashboard_auth.exceptions.exceptions import InvalidUsername, \
     InvalidPassword
-from covid_dashboard.interactors.login_interactor import \
+from covid_dashboard_auth.interactors.login_interactor import \
     LoginInteractor
-from covid_dashboard.interactors.storages.user_storage_interface import \
+from covid_dashboard_auth.interactors.storages.user_storage_interface import \
     UserStorageInterface
-from covid_dashboard.interactors.presenters.presenter_interface import \
+from covid_dashboard_auth.interactors.presenters.presenter_interface import \
     PresenterInterface
 
 class TestLoginInteractor:
@@ -31,14 +31,14 @@ class TestLoginInteractor:
         interactor = LoginInteractor(
             storage=storage,
             oauth2storage=oauth2_storage,
-            presenter=presenter
         )
 
         # Act
         with pytest.raises(BadRequest):
-            interactor.login(
+            interactor.login_wrapper(
                 username=username,
-                password=password
+                password=password,
+                presenter=presenter
             )
 
         # Assert
@@ -46,6 +46,7 @@ class TestLoginInteractor:
         presenter.raise_exception_for_invalid_username.assert_called_once()
 
     def test_login_interactor_with_invalid_password_raises_error(self):
+
         # Arrange
         username = 'user_1'
         password = 'invalidpassword'
@@ -58,14 +59,14 @@ class TestLoginInteractor:
         interactor = LoginInteractor(
             storage=storage,
             oauth2storage=oauth2_storage,
-            presenter=presenter
         )
 
         # Act
         with pytest.raises(BadRequest):
-            interactor.login(
+            interactor.login_wrapper(
                 username=username,
-                password=password
+                password=password,
+                presenter=presenter
             )
 
         # Assert
@@ -81,11 +82,11 @@ class TestLoginInteractor:
             user_id=1,
             access_token="123456",
             refresh_token="654321",
-            expires_in=datetime.datetime
+            expires_in=datetime.datetime(2020, 6, 30)
         )
     )
     def test_login_interactor_with_valid_details_returns_user_details_dict(
-        self, user_dto):
+        self, auth_service_mock):
 
         # Arrange
         username = 'user_1'
@@ -108,14 +109,14 @@ class TestLoginInteractor:
         
         interactor = LoginInteractor(
             storage=storage,
-            oauth2storage=oauth2_storage,
-            presenter=presenter
+            oauth2storage=oauth2_storage
         )
 
         # Act
-        response = interactor.login(
+        response = interactor.login_wrapper(
             username=username,
-            password=password
+            password=password,
+            presenter=presenter
         )
 
         # Assert

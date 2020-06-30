@@ -1,13 +1,7 @@
-from .state import State
-from .district import District
-from .statistics import DailyStatistics
-from .mandal import Mandal
+from .user import User
 
 __all__ = [
-    'State',
-    'District',
-    'DailyStatistics',
-    'Mandal'
+    'User'
 ]
 
 # class DummyModel(AbstractDateTimeModel):

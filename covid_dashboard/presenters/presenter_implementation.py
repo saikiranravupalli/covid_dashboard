@@ -1,9 +1,8 @@
 import pytest
 from typing import List
 from django_swagger_utils.drf_server.exceptions import BadRequest, Forbidden
-from covid_dashboard.exceptions.exception_messages import INVALID_USERNAME, \
-    INVALID_PASSWORD, INVALID_MANDAL_ID, INVALID_POSITIVE_NUMBER, \
-    INVALID_ACCESS, INVALID_DISTRICT_ID
+from covid_dashboard.exceptions.exception_messages import INVALID_MANDAL_ID, \
+    INVALID_POSITIVE_NUMBER, INVALID_ACCESS, INVALID_DISTRICT_ID
 
 from covid_dashboard.constants.enums import DistrictZones, DateFormat
 from covid_dashboard.interactors.storages.dtos import \
@@ -19,22 +18,8 @@ from covid_dashboard.interactors.presenters.presenter_interface import \
 
 class PresenterImplementation(PresenterInterface):
 
-    def raise_exception_for_invalid_username(self):
-        raise BadRequest(*INVALID_USERNAME)
-
-    def raise_exception_for_invalid_password(self):
-        raise BadRequest(*INVALID_PASSWORD)
-
     def raise_exception_for_invalid_user_admin(self):
         raise Forbidden(*INVALID_ACCESS)
-
-    def get_response_for_login(self, tokens_dto, is_admin: bool):
-        response = {
-            "access_token": tokens_dto.access_token,
-            "refresh_token": tokens_dto.refresh_token,
-            "is_admin": is_admin
-        }
-        return response
 
     def get_state_cumulative_statistics_response(self,
         state_cumulative_statistics_dto: StateCumulativeStatisticsDto):

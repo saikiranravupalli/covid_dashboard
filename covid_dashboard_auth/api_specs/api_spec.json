@@ -1,0 +1,98 @@
+{
+    "swagger": "2.0",
+    "host": "127.0.0.1:8000",
+    "basePath": "/covid_dashboard_auth/",
+    "info": {
+        "version": "1.0.0",
+        "title": "Simple API",
+        "description": "A simple API to learn how to write OpenAPI Specification"
+    },
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "oauth": {
+            "tokenUrl": "http://auth.ibtspl.com/oauth2/",
+            "flow": "password",
+            "scopes": {
+                "read": "read users",
+                "write": "create users",
+                "update": "update users",
+                "delete": "delete users"
+            },
+            "type": "oauth2"
+        }
+    },
+    "parameters": {
+        "UserDetailsParameter": {
+            "name": "user_details",
+            "in": "body",
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password"
+                ]
+            }
+        }
+    },
+    "responses": {
+        "UserDetailsResponse": {
+            "description": "",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "access_token": {
+                        "type": "string"
+                    },
+                    "refresh_token": {
+                        "type": "string"
+                    },
+                    "is_admin": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "access_token",
+                    "refresh_token",
+                    "is_admin"
+                ]
+            }
+        }
+    },
+    "paths": {
+        "/login/v1/": {
+            "post": {
+                "operationId": "get_user_login_details",
+                "summary": "get user login details",
+                "description": "",
+                "parameters": [{
+                    "$ref": "#/parameters/UserDetailsParameter"
+                }],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/UserDetailsResponse"
+                    },
+                    "400": {
+                        "description": "Invalid details"
+                    }
+                }
+            }
+        }
+    }
+}

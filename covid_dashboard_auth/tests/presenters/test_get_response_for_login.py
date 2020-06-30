@@ -1,6 +1,6 @@
 import datetime
 from common.dtos import UserAuthTokensDTO
-from covid_dashboard.presenters.presenter_implementation import \
+from covid_dashboard_auth.presenters.presenter_implementation import \
     PresenterImplementation
 
 def test_get_response_for_login_with_valid_details_returns_user_token_dict():

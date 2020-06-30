@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from covid_dashboard_auth.interactors.storages.dtos import UserDetailsDTO
 
 
 class UserStorageInterface(ABC):
@@ -12,5 +13,5 @@ class UserStorageInterface(ABC):
         pass
 
     @abstractmethod
-    def is_user_admin(self, user_id: int) -> bool:
+    def get_user_details_dto(self, user_id: int) -> UserDetailsDTO:
         pass

@@ -1,7 +1,7 @@
 import pytest
-from covid_dashboard.models import User
-from covid_dashboard.exceptions.exceptions import InvalidUsername
-from covid_dashboard.storages.user_storage_implementation import \
+from covid_dashboard_auth.models import User
+from covid_dashboard_auth.exceptions.exceptions import InvalidUsername
+from covid_dashboard_auth.storages.user_storage_implementation import \
     UserStorageImplementation
 
 @pytest.mark.django_db
@@ -16,6 +16,7 @@ def test_is_valid_username_with_invalid_details_raises_error():
 
 @pytest.mark.django_db
 def test_is_valid_username_with_valid_details(user):
+
     # Arrange
     username = 'user_1'
     storage = UserStorageImplementation()
