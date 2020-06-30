@@ -1,7 +1,7 @@
 from django_swagger_utils.utils.test import CustomAPITestCase
 
 from covid_dashboard.factories.factories import StateFactory, \
-    DistrictFactory, MandalFactory, DailyStatisticsFactory, UserFactory
+    DistrictFactory, MandalFactory, DailyStatisticsFactory
 
 class CustomTestUtils(CustomAPITestCase):
 
@@ -14,11 +14,6 @@ class CustomTestUtils(CustomAPITestCase):
         DistrictFactory.reset_sequence()
         MandalFactory.reset_sequence()
         DailyStatisticsFactory.reset_sequence()
-
-    def create_user(self):
-        user = UserFactory(username='user1')
-        user.set_password('12345')
-        user.save()
 
     def statistics(self):
         state = StateFactory()

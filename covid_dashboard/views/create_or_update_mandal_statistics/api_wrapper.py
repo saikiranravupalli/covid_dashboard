@@ -7,8 +7,6 @@ from covid_dashboard.interactors.create_or_update_mandal_statistics import \
     CreateOrUpdateMandalStatisticsInteractor
 from covid_dashboard.storages.mandal_storage_implementation import \
     MandalStorageImplementation
-from covid_dashboard.storages.user_storage_implementation import \
-    UserStorageImplementation
 from covid_dashboard.presenters.presenter_implementation import \
     PresenterImplementation
 
@@ -19,7 +17,6 @@ def api_wrapper(*args, **kwargs):
     request_data = kwargs['request_data']
 
     mandal_storage = MandalStorageImplementation()
-    user_storage = UserStorageImplementation()
     presenter = PresenterImplementation()
 
     user_id = user.id
@@ -31,7 +28,6 @@ def api_wrapper(*args, **kwargs):
 
     interactor = CreateOrUpdateMandalStatisticsInteractor(
         mandal_storage=mandal_storage,
-        user_storage=user_storage,
         presenter=presenter
     )
 
