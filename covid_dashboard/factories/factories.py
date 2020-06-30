@@ -2,7 +2,7 @@ import factory
 from datetime import date, timedelta
 from faker import Faker
 
-from covid_dashboard.models import User, District, Mandal, \
+from covid_dashboard.models import District, Mandal, \
     State, DailyStatistics
 from factory.fuzzy import FuzzyInteger
 
@@ -22,14 +22,6 @@ TOTAL_DEATHS = [10, 20, 30, 40, 50, 100]
 TOTAL_CONFIRMED = [300, 400, 500, 600, 700, 800]
 TOTAL_RECOVERED = [60, 70, 80, 90, 100, 150]
 
-
-class UserFactory(factory.django.DjangoModelFactory):
-
-    class Meta:
-        model = User
-
-    username = factory.LazyFunction(Faker().name)
-    is_admin = False
 
 class StateFactory(factory.django.DjangoModelFactory):
 
